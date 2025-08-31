@@ -13,7 +13,6 @@ body{
     flex-direction: column;
     gap: 10px;
     background-color: white;
-    border: none;
     box-shadow: 0 0 10px rgb(187, 187, 187);
     border-radius: 10px;
     padding-inline: 18px;
