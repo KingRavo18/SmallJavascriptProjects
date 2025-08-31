@@ -1,7 +1,8 @@
 function calculateTotal(){
     const cashAmount = Number(document.getElementById("cashAmount").value.trim()),
           tipPercentage = Number(document.getElementById("tipPercentage").value.trim()),
-          result = document.getElementById("total");
+          result = document.getElementById("total"),
+          formatCurrency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD"});
 
     try{
         if(cashAmount <= 0 || isNaN(cashAmount)){
@@ -14,6 +15,7 @@ function calculateTotal(){
         return alert(error.message);
     }
 
-    document.getElementById("tip").textContent = "$" + (cashAmount / 100 * tipPercentage).toFixed(2);
-    result.textContent = "$" + (cashAmount + (cashAmount / 100 * tipPercentage)).toFixed(2);
+    const tipAmount = cashAmount * tipPercentage / 100;
+    document.getElementById("tip").textContent = formatCurrency.format(tipAmount);
+    result.textContent = formatCurrency.format(cashAmount + tipAmount);
 }

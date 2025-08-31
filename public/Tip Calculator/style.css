@@ -1,7 +1,4 @@
 body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgb(243, 243, 243);
     height: 100vh;
@@ -9,6 +6,10 @@ body{
 }
 
 .tip-calculator-container{
+    position: relative;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -28,6 +29,13 @@ input{
     padding: 10px;
     border: 1px solid rgb(180, 180, 180);
     border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover{
+        background-color: rgb(230, 230, 230);
+        font-weight: bold;
+    }
 }
 
 button{
@@ -58,4 +66,56 @@ span{
     font-weight: bold;
     font-size: 150%;
     height: 50px;
+}
+
+@media only screen and (max-width: 800px) and (max-height: 950px) {
+  .tip-calculator-container{
+    width: 90vw;
+    font-size: 140%;
+  }
+  input{
+    font-size: 100%;
+  }
+  span{
+    font-size: 120%;
+  }
+}
+
+@media only screen and (min-height: 700px) and (max-width: 800px) and (max-height: 950px) {
+  .tip-calculator-container{
+    width: 90vw;
+    font-size: 170%;
+  }
+  input{
+    font-size: 100%;
+  }
+  span{
+    font-size: 120%;
+  }
+}
+
+@media only screen and (min-width: 551px) and (max-width: 1050px) and (max-height: 1400px) {
+  .tip-calculator-container{
+    width: 90vw;
+    font-size: 240%;
+  }
+  input{
+    font-size: 150%;
+  }
+  span{
+    font-size: 120%;
+  }
+}
+
+@media only screen and (min-width: 551px) and (max-width: 1050px) and (max-height: 700px) {
+  .tip-calculator-container{
+    width: 90vw;
+    font-size: 140%;
+  }
+  input{
+    font-size: 150%;
+  }
+  span{
+    font-size: 120%;
+  }
 }
