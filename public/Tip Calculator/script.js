@@ -5,7 +5,7 @@ function calculateTotal(){
 
         if(Number(cashAmount.value) === 0 || cashAmount.value < 0 || tipPercentage.value < 0){
             result.style.color = "red";
-            result.style.fontSize = "100%"
+            result.style.fontSize = "100%";
             if(Number(cashAmount.value) === 0){
                 result.textContent = "Please enter a cash amount";
             }else{
@@ -15,6 +15,6 @@ function calculateTotal(){
         }
 
     result.style.color = "black";
-    result.style.fontSize = "150%"
+    result.style.fontSize = "150%";
     result.textContent = (Number(cashAmount.value) + (cashAmount.value / 100 * tipPercentage.value)).toFixed(2);
 }
