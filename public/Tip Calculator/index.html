@@ -13,9 +13,12 @@
         <label for="cashAmount">Cash amount:</label>
         <input type="number" id="cashAmount" min="1">
         <label for="tipPercentage">Tip percentage:</label>
-        <input type="number" id="tipPercentage" min="0">
+        <input type="number" id="tipPercentage" min="0" value="0">
         <button onclick="calculateTotal()">CALCULATE</button>
-        <p>Total: <span id="total">0</span></p>
+        <div class="result-container">
+            <p>Tip: <span id="tip">0</span></p>
+            <p>Total: <span id="total">0</span></p>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>

@@ -1,20 +1,12 @@
 function calculateTotal(){
-    const cashAmount = document.getElementById("cashAmount"),
-          tipPercentage = document.getElementById("tipPercentage"),
+    const cashAmount = Number(document.getElementById("cashAmount").value.trim()),
+          tipPercentage = Number(document.getElementById("tipPercentage").value.trim()),
           result = document.getElementById("total");
 
-        if(Number(cashAmount.value) === 0 || cashAmount.value < 0 || tipPercentage.value < 0){
-            result.style.color = "red";
-            result.style.fontSize = "100%";
-            if(Number(cashAmount.value) === 0){
-                result.textContent = "Please enter a cash amount";
-            }else{
-                result.textContent = "Both inputs must contain positive values";
-            }
-            return;
+        if(cashAmount <= 0 || tipPercentage < 0 || isNaN(cashAmount) || isNaN(tipPercentage)){
+            return window.alert(cashAmount === 0 ? "Please enter a valid cash amount" : "Both inputs must contain positive values");
         }
-
-    result.style.color = "black";
-    result.style.fontSize = "150%";
-    result.textContent = (Number(cashAmount.value) + (cashAmount.value / 100 * tipPercentage.value)).toFixed(2);
+        
+    document.getElementById("tip").textContent = "$" + (cashAmount / 100 * tipPercentage).toFixed(2);
+    result.textContent = "$" + (cashAmount + (cashAmount / 100 * tipPercentage)).toFixed(2);
 }
