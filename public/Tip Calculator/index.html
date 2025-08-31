@@ -10,12 +10,12 @@
     <div class="tip-calculator-container">
         <h1>Tip Calculator</h1>
         <p>Enter the bill amount and tip percentage to calculate the total.</p>
-        <label for="billAmount">Bill amount:</label>
-        <input type="number" id="billAmount" min="1">
+        <label for="cashAmount">Cash amount:</label>
+        <input type="number" id="cashAmount" min="1">
         <label for="tipPercentage">Tip percentage:</label>
         <input type="number" id="tipPercentage" min="0">
         <button onclick="calculateTotal()">CALCULATE</button>
-        <p id="total">Total: </p>
+        <p>Total: <span id="total">0</span></p>
     </div>
     <script src="./script.js"></script>
 </body>
