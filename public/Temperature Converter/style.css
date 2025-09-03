@@ -1,48 +1,45 @@
-body {
+body{
     margin: 0;
     height: 100vh;
     background: linear-gradient(to top right, lightblue, lightgreen);
     font-family: monospace;
+    display: grid;
+    place-items: center;
 }
 
 .temperature-converter-container{
-    position: relative;
-    top: 50%;
     background-color: rgba(247, 255, 247, 0.377);
-    transform: translateY(-50%);
-    margin: auto;
     width: 35vw;
     box-shadow: 0 5px 5px rgb(122, 122, 122);
     padding: 20px;
+    color:teal;
     border-radius: 10px;
 }
 
-h1 {
+h1{
     text-align: center;
-    color:teal;
     font-size: 250%;
 }
 
-label {
+label{
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 140%;
-    color:teal;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
-input {
+input{
     font-family: monospace;
     background-color: rgba(255, 255, 255, 0.336);
     padding: 4px;
+    cursor: pointer;
     font-size: 100%;
     color: rgb(3, 100, 100);
-    border-top: 2px solid rgb(185, 185, 185);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.692);
-    border-left: 2px solid rgb(185, 185, 185);
-    border-right: 2px solid rgba(255, 255, 255, 0.692);
+    border: 2px solid rgba(255, 255, 255, 0.692);
+    border-top-color:rgb(185, 185, 185);
+    border-left-color:rgb(185, 185, 185);
 
     &::placeholder{
         color: rgb(167, 167, 167);
