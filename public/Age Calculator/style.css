@@ -1,0 +1,70 @@
+body{
+    background-color: rgb(241, 241, 241);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.age-calculator-container{
+    background-color: white;
+    padding: 20px 10px 80px 20px;
+    width: 47vw;
+    box-shadow: 0 0 10px rgb(199, 199, 199);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    & h1{
+        margin-top: -2px;
+        font-size: 250%;
+    }
+
+    & label{
+        font-weight: bold;
+        font-size: 120%;
+    }
+
+    & input{
+        cursor: pointer;
+        padding: 10px;
+        width: 320px;
+        font-family: Arial, Helvetica, sans-serif;
+        border-radius: 5px;
+        border: 1px solid lightgray;
+        transition: 0.5s;
+
+        &:hover{
+            background-color: rgb(184, 183, 183);
+        }
+    }
+
+    & button{
+        cursor: pointer;
+        background-color: rgb(0, 140, 255);
+        color: white;
+        font-weight: bold;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: 0.5s;
+
+        &:hover{
+            background-color: rgb(0, 47, 255);
+        }
+
+        &:active{
+            background-color: rgb(1, 35, 187);
+        }
+    }
+
+    & p{
+        position: absolute;
+        font-weight: bold;
+        top: 59%;
+        font-size: 180%;
+    }
+}

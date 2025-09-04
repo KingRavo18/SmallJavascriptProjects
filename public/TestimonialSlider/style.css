@@ -16,7 +16,7 @@ body{
     color: white;
     width: 545px;
     animation-name: slideIn;
-    animation-duration: 2.1s;
+    animation-duration: 0.5s;
 
     & img{
         object-fit: cover;
