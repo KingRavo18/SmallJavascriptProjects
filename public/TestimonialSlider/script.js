@@ -38,7 +38,7 @@ async function createSlides() {
 
 function initializeSlider() {
     const slides = document.querySelectorAll(".testimonial-container");
-    let slideIndex = 0;
+    let slideIndex = localStorage.getItem("slideIndex") || 0;
     const slideOutAnim = () => slides[slideIndex].classList.add("slideOutAnimation");
 
     if(slides.length > 0){
@@ -54,6 +54,7 @@ function initializeSlider() {
                 slideIndex = 0;
             }
             slides[slideIndex].style.display = "block";
+            localStorage.setItem("slideIndex", slideIndex);
             setTimeout(slideOutAnim, 6000);
         }, 8000);
     }
