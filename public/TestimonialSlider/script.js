@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", createSlides);
 
-async function createSlides() {
+async function createSlides(){
 
     try{
         const response = await fetch("slideData.json");
@@ -23,7 +23,7 @@ async function createSlides() {
             const signature = document.createElement("p");
             signature.textContent = dataObject.signature;
 
-            document.body.appendChild(testimonialContainer);
+            document.getElementById("testimonial-slider-container").appendChild(testimonialContainer);
             testimonialContainer.appendChild(image);
             testimonialContainer.appendChild(testimonial);
             testimonialContainer.appendChild(signature);
@@ -36,26 +36,26 @@ async function createSlides() {
     }
 }
 
-function initializeSlider() {
+function initializeSlider(){
     const slides = document.querySelectorAll(".testimonial-container");
-    let slideIndex = localStorage.getItem("slideIndex") || 0;
+    let slideIndex = Number(localStorage.getItem("slideIndex")) || 0;
+    let timeout = null;
     const slideOutAnim = () => slides[slideIndex].classList.add("slideOutAnimation");
 
     if(slides.length > 0){
-        slides[slideIndex].style.display = "block";
+        slides[slideIndex].classList.add("visible");
         setTimeout(slideOutAnim, 6000);
         setInterval(() => {
+            clearTimeout(timeout);
+            slides[slideIndex].classList.remove("visible");
+            slides[slideIndex].classList.remove("slideOutAnimation");
             slideIndex++;
-            slides.forEach(slide => {
-                slide.style.display = "none";
-                slide.classList.remove("slideOutAnimation");
-            });
             if(slideIndex >= slides.length){
                 slideIndex = 0;
             }
-            slides[slideIndex].style.display = "block";
+            slides[slideIndex].classList.add("visible");
             localStorage.setItem("slideIndex", slideIndex);
-            setTimeout(slideOutAnim, 6000);
+            timeout = setTimeout(slideOutAnim, 6000);
         }, 8000);
     }
 }
