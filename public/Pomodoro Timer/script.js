@@ -1,5 +1,6 @@
 const counterDisplay = document.getElementById("counterDisplay");
 const timeInput = document.getElementById("timeInput");
+const timerFinishedSound = document.getElementById("TimerFinishedSound");
 let startingTime;
 let intervalCounter = null;
 let isRunning = false;
@@ -15,7 +16,7 @@ function start(){
     if(!areSecondsCalculated){
         startingTime = Number(timeInput.value) * 60;
     }   
-    if(startingTime === 0){
+    if(startingTime <= 0){
         return window.alert("Please input the amount of minutes.")
     }
     if(!isRunning){
@@ -30,7 +31,7 @@ function countTime() {
     if(startingTime < 0){
         clearInterval(intervalCounter);
         isRunning = false;
-        return;
+        return timerFinishedSound.play();
     }   
 
     let minutes = String(Math.floor(startingTime / 60 % 60));
@@ -46,9 +47,8 @@ function stop(){
 }
 
 function reset(){
-    startingTime = 1500;
+    startingTime = Number(timeInput.value) * 60;
     changeDisplay();
 }
 
-//Play a sound when finished
 //Add presets
