@@ -9,11 +9,11 @@
 <body>
     <div class="pomodoro-timer-container">
         <h1>Pomodoro Timer</h1>
-        <p>25:00</p>
+        <p id="counterDisplay">25:00</p>
         <div class="timer-control-container">
-            <button>START</button>
-            <button>STOP</button>
-            <button>RESET</button>
+            <button class="startBtn" onclick="start()">START</button>
+            <button class="stopBtn" onclick="stop()">STOP</button>
+            <button class="resetBtn" onclick="reset()">RESET</button>
         </div>
     </div>
     <script src="./script.js"></script>

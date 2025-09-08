@@ -1,0 +1,54 @@
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    place-items: center;
+}
+
+.pomodoro-timer-container{
+    margin-top: 50px;
+    text-align: center;
+
+    & h1{
+        font-size: 250%;
+    }
+
+    & p{
+        font-size: 500%;
+    }
+
+    & button{
+        padding: 10px 20px;
+        border: none;
+        color: white;
+        font-size: 120%;
+        margin: 0 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    & .startBtn{
+        background-color: green;
+
+        &:hover{
+            background-color: rgb(3, 182, 3);
+        }
+    }
+
+    & .stopBtn{
+        background-color: rgb(161, 1, 1);
+
+        &:hover{
+            background-color: red;
+        }
+    }
+
+    & .resetBtn{
+        background-color: rgb(121, 121, 121);
+
+        &:hover{
+            background-color: rgb(165, 165, 165);
+        }
+    }
+}
