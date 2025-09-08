@@ -1,12 +1,20 @@
 const counterDisplay = document.getElementById("counterDisplay");
+const timeInput = document.getElementById("timeInput");
+let startingTime;
 let intervalCounter = null;
-let startingTime = 1500;
 let isActive = false;
+let exists = false;
+
+const changeDisplay = () => counterDisplay.textContent = timeInput.value.padStart(2, "0") + ":00";
 
 function start(){
+    if(!exists){
+        startingTime = Number(timeInput.value) * 60;
+    }   
     if(!isActive){
         intervalCounter = setInterval(countTime, 1000);
         isActive = true;
+        exists = true;
     }
 }
 
@@ -34,9 +42,9 @@ function reset(){
     startingTime = 1500;
     clearInterval(intervalCounter);
     isActive = false;
-    counterDisplay.textContent = "25:00";
+    exists = false;
+    changeDisplay();
 }
 
 //Play a sound when finished
-//Let the user enter how many minutes they want
 //Add presets

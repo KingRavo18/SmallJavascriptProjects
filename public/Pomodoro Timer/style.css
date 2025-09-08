@@ -13,6 +13,11 @@ body{
         font-size: 250%;
     }
 
+    & input{
+        padding: 5px 10px;
+        font-size: 120%;
+    }
+
     & p{
         font-size: 500%;
     }

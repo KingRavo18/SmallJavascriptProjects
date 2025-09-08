@@ -9,7 +9,8 @@
 <body>
     <div class="pomodoro-timer-container">
         <h1>Pomodoro Timer</h1>
-        <p id="counterDisplay">25:00</p>
+        <input type="number" id="timeInput" min="1" onchange="changeDisplay()" placeholder="Enter Minutes">
+        <p id="counterDisplay">00:00</p>
         <div class="timer-control-container">
             <button class="startBtn" onclick="start()">START</button>
             <button class="stopBtn" onclick="stop()">STOP</button>
