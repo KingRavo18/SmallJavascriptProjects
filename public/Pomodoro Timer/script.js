@@ -15,6 +15,9 @@ function start(){
     if(!areSecondsCalculated){
         startingTime = Number(timeInput.value) * 60;
     }   
+    if(startingTime === 0){
+        return window.alert("Please input the amount of minutes.")
+    }
     if(!isRunning){
         intervalCounter = setInterval(countTime, 1000);
         isRunning = true;
@@ -44,8 +47,6 @@ function stop(){
 
 function reset(){
     startingTime = 1500;
-    clearInterval(intervalCounter);
-    isRunning = false;
     changeDisplay();
 }
 
