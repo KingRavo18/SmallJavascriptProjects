@@ -2,19 +2,23 @@ const counterDisplay = document.getElementById("counterDisplay");
 const timeInput = document.getElementById("timeInput");
 let startingTime;
 let intervalCounter = null;
-let isActive = false;
-let exists = false;
+let isRunning = false;
+let areSecondsCalculated = false;
 
-const changeDisplay = () => counterDisplay.textContent = timeInput.value.padStart(2, "0") + ":00";
+function changeDisplay(){
+    counterDisplay.textContent = timeInput.value.padStart(2, "0") + ":00";
+    areSecondsCalculated = false;
+    stop();
+}
 
 function start(){
-    if(!exists){
+    if(!areSecondsCalculated){
         startingTime = Number(timeInput.value) * 60;
     }   
-    if(!isActive){
+    if(!isRunning){
         intervalCounter = setInterval(countTime, 1000);
-        isActive = true;
-        exists = true;
+        isRunning = true;
+        areSecondsCalculated = true;
     }
 }
 
@@ -22,7 +26,7 @@ function countTime() {
     startingTime--;
     if(startingTime < 0){
         clearInterval(intervalCounter);
-        isActive = false;
+        isRunning = false;
         return;
     }   
 
@@ -32,17 +36,16 @@ function countTime() {
 }
 
 function stop(){
-    if(isActive){
+    if(isRunning){
         clearInterval(intervalCounter);
-        isActive = false;
+        isRunning = false;
     }
 }
 
 function reset(){
     startingTime = 1500;
     clearInterval(intervalCounter);
-    isActive = false;
-    exists = false;
+    isRunning = false;
     changeDisplay();
 }
 
