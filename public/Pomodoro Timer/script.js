@@ -4,25 +4,29 @@ const timerFinishedSound = document.getElementById("TimerFinishedSound");
 let startingTime;
 let intervalCounter = null;
 let isRunning = false;
-let areSecondsCalculated = false;
+let haveSecondsBeenCalculated = false;
 
-function changeDisplay(){
+//Works as a timer reset if called directly
+function setDisplay(){
     counterDisplay.textContent = timeInput.value.padStart(2, "0") + ":00";
-    areSecondsCalculated = false;
+    haveSecondsBeenCalculated = false;
     stop();
 }
 
 function start(){
-    if(!areSecondsCalculated){
+    if(!haveSecondsBeenCalculated){
         startingTime = Number(timeInput.value) * 60;
+        haveSecondsBeenCalculated = true;
     }   
+
     if(startingTime <= 0){
-        return window.alert("Please input the amount of minutes.")
+        setDisplay();
+        return window.alert("Please input the amount of minutes.");
     }
+
     if(!isRunning){
         intervalCounter = setInterval(countTime, 1000);
         isRunning = true;
-        areSecondsCalculated = true;
     }
 }
 
@@ -44,11 +48,6 @@ function stop(){
         clearInterval(intervalCounter);
         isRunning = false;
     }
-}
-
-function reset(){
-    startingTime = Number(timeInput.value) * 60;
-    changeDisplay();
 }
 
 //Add presets

@@ -9,12 +9,12 @@
 <body>
     <div class="pomodoro-timer-container">
         <h1>Pomodoro Timer</h1>
-        <input type="number" id="timeInput" min="1" onchange="changeDisplay()" placeholder="Enter Minutes">
+        <input type="number" id="timeInput" min="1" onchange="setDisplay()" placeholder="Enter Minutes">
         <p id="counterDisplay">00:00</p>
         <div class="timer-control-container">
             <button class="startBtn" onclick="start()">START</button>
             <button class="stopBtn" onclick="stop()">STOP</button>
-            <button class="resetBtn" onclick="reset()">RESET</button>
+            <button class="resetBtn" onclick="setDisplay()">RESET</button>
         </div>
         <audio id="TimerFinishedSound">
             <source src="../Audio/PomodoroTimerFinished.mp3" type="audio/mpeg">
