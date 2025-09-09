@@ -1,0 +1,79 @@
+body{
+    background-image: url("https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg?cs=srgb&dl=pexels-pixabay-206359.jpg&fm=jpg");
+    margin: 0;
+    height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    display: grid;
+    place-items: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+.digital-clock-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & h1{
+        font-size: 100%;
+        letter-spacing: 4px;
+        font-weight: 100;
+    }
+
+    & .time-container{
+        margin-top: -50px;
+        display: flex;
+        gap: 10px;
+
+        & p{
+            background-color: rgba(137, 43, 226, 0.75);
+            width: 120px;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 370%;
+            text-shadow: 0 0 10px rgb(54, 54, 54);
+        }
+    }
+
+    & .specification-container{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        & .time-specification-container{
+            display: flex;
+            gap: 10px;
+
+            & p{
+                background-color: rgba(60, 0, 128, 0.75);
+                width: 120px;
+                height: 40px;
+                margin-top: -60px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 80%;
+                text-shadow: 0 0 10px rgb(54, 54, 54);
+            }
+        }
+
+        & #PmAm{
+            background-color: rgba(0, 128, 0, 0.75);
+            width: 60px;
+            height: 40px;
+            margin-top: -60px;
+            margin-right: -70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 130%;
+            text-shadow: 0 0 10px rgb(54, 54, 54);
+        }
+    }
+}
