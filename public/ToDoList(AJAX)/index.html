@@ -8,8 +8,10 @@
 </head>
 <body>
     <div class="ToDoList-container">
-        <input type="text" id="taskInput" name="task" placeholder="Enter your task" onkeydown="if(event.keyCode == 13) submitTask()">
-        <ul id="taskContianer"></ul>
+        <form id="task-submit-form" onsubmit="submitTask(event)">
+            <input type="text" id="taskInput" name="task" placeholder="Enter your task">
+        </form>
+        <ul id="taskContainer"></ul>
     </div>
     <script src="./script.js"></script>
 </body>

@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", retrieveData);
-document.getElementById("taskInput").addEventListener("onkeydown", event => {
-    if(event.keyCode == 13){
-        submitTask();
+
+document.addEventListener("keydown", event => {
+    if(event.key === "Enter"){
+        document.getElementById("task-submit-form").submit();
     }
 });
 
-function submitTask(){
+function submitTask(event){
+    //prevents the forms default reload
+    event.preventDefault();
     const taskValue = document.getElementById("taskInput").value;
     const params = `task=${taskValue}`;
 
@@ -17,6 +20,9 @@ function submitTask(){
         console.log(this.responseText);
         createListItem(taskValue);
         document.getElementById("taskInput").value = "";
+    }
+    xhr.onerror = () => {
+        console.error("Could not submit task");
     }
 
     xhr.send(params);
@@ -33,7 +39,15 @@ function retrieveData(){
                 createListItem(task.task);
             });
         }
+        if(this.status === 404){
+            console.error("Could not find task data");
+        }
     }
+
+    xhr.onerror = () => {
+        console.error("Could not retrieve tasks");
+    }
+
     xhr.send();
 }
 
@@ -51,5 +65,5 @@ function createListItem(taskContents){
     buttonContainer.appendChild(deleteBtn);
     listItem.appendChild(buttonContainer);
 
-    document.getElementById("taskContianer").append(listItem);
+    document.getElementById("taskContainer").append(listItem);
 }

@@ -8,7 +8,7 @@ if(isset($_POST["task"])){
     $query = "INSERT INTO tasks(task) VALUES('$task')";
 
     if(mysqli_query($conn, $query)){
-        echo "User Added";
+        echo "Task Added Succesfully";
     }else{
         echo "ERROR: ". mysqli_error($conn); 
     }
