@@ -1,15 +1,28 @@
 document.addEventListener("DOMContentLoaded", retrieveData);
+document.getElementById("taskInput").addEventListener("onkeydown", event => {
+    if(event.keyCode == 13){
+        submitTask();
+    }
+});
 
-function submitTask(event){
-    event.preventDefault();
-    const task = document.getElementById("taskInput").value;
-    const params = `task=${task}`;
+function submitTask(){
+    const taskValue = document.getElementById("taskInput").value;
+    const params = `task=${taskValue}`;
 
     const xhr = new XMLHttpRequest();
+    xhr.open("POST", "./sendData.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function(){
+        console.log(this.responseText);
+        createListItem(taskValue);
+        document.getElementById("taskInput").value = "";
+    }
+
+    xhr.send(params);
 }
 
-function retrieveData(event){
-    event.preventDefault();
+function retrieveData(){
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "./retrieveData.php", true);
 
