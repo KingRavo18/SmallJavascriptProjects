@@ -1,0 +1,45 @@
+body{
+    background-color: rgb(178, 253, 57);
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.ToDoList-container{
+    width: 400px;
+    padding: 0;
+
+    & input{
+        font-family: cursive;
+        padding: 15px 0 15px 20px;
+        width: 94%;
+        font-size: 150%;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        box-shadow: 0 0 5px rgb(136, 136, 136);
+        border: none;
+
+        &::placeholder{
+            color: lightgray;
+        }
+    }
+
+    & ul{
+        font-family: cursive;
+        margin: 0;
+        padding: 0;
+        width: 99%;
+        background-color: yellow;
+        box-shadow: 0 0 5px rgb(136, 136, 136);
+        list-style: none;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+        & li{
+            display: flex;
+            justify-content:space-between;
+            padding: 20px 10px; 
+        }
+    }
+}
