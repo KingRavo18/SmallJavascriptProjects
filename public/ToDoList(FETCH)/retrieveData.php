@@ -2,7 +2,7 @@
 
 $conn = mysqli_connect("localhost", "root", "", "ajaxtodolist");
 
-$query = "SELECT task FROM tasks";
+$query = "SELECT * FROM tasks";
 
 $result = mysqli_query($conn, $query);
 

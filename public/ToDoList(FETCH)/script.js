@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     retrieveData();
     document.getElementById("task-submit-form").addEventListener("submit", submitTask);
+
 });
 
 async function submitTask(event){
@@ -39,7 +40,7 @@ async function retrieveData(){
 
         const data = await response.json();
         data.forEach(task => {
-            createListItem(task.task);
+            createListItem(task.task, task.id);
         });
     }
     catch(error){
@@ -47,7 +48,28 @@ async function retrieveData(){
     }
 }
 
-function createListItem(taskContents){
+async function updateData(){
+    try{
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+async function deleteData(id){
+    try{
+        const response = await fetch(`./deleteData.php?id=${id}`, {method: "DELETE"});
+
+        if(!response.ok){
+            throw new Error("Failed to delete task");
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+function createListItem(taskContents, id){
     const listItem = document.createElement("li");
     const buttonContainer = document.createElement("div");
     const finishedBtn = document.createElement("button");
@@ -56,6 +78,11 @@ function createListItem(taskContents){
     listItem.textContent = taskContents;
     finishedBtn.textContent = "✅";
     deleteBtn.textContent = "🗑️";
+    deleteBtn.id = "deleteBtn";
+    deleteBtn.addEventListener("click", async () => {
+        await deleteData(id);
+        listItem.remove();
+    });
 
     buttonContainer.appendChild(finishedBtn);
     buttonContainer.appendChild(deleteBtn);

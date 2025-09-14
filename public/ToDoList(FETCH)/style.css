@@ -39,7 +39,16 @@ body{
         & li{
             display: flex;
             justify-content:space-between;
+            align-items: center;
             padding: 20px 10px; 
+
+            & button{
+                border: none;
+                font-size: 110%;
+                background-color: yellow;
+                padding: 2px;
+                cursor: pointer;
+            }
         }
     }
 }
