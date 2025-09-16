@@ -1,92 +1,98 @@
 document.addEventListener("DOMContentLoaded", () => {
-    retrieveData();
-    document.getElementById("task-submit-form").addEventListener("submit", submitTask);
-
+    const taskManager = new TaskManager("./retrieveData.php", "./sendData.php", "./deleteData.php");
+    taskManager.init();
 });
 
-async function submitTask(event){
-    //prevents the forms default reload
-    event.preventDefault();
-    try{
-        const taskValueInput = document.getElementById("taskInput");
-        const response = await fetch("./sendData.php", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams({
-                task: taskValueInput.value
-            })
-        });
+class TaskManager {
+    constructor(retrieveUrl, submitUrl, deleteUrl){
+        this.retrieveUrl = retrieveUrl;
+        this.submitUrl = submitUrl;
+        this.deleteUrl = deleteUrl;
+        this.form = document.getElementById("task-submit-form");
+        this.taskValueInput = document.getElementById("taskInput");  
+    }
+
+    init(){
+        this.retrieveData();
+        this.form.addEventListener("submit", (event) => this.submitTask(event));
+    }
+
+    async retrieveData(){
+        try{
+            const response = await fetch(this.retrieveUrl);
+            if(!response.ok){
+                throw new Error("Failed to retrieve task data");
+            }   
+
+            const data = await response.json();
+            data.forEach(task => {
+                this.createListItem(task.task, task.id);
+            });
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+    async submitTask(event){
+        //prevents the forms default reload
+        event.preventDefault();
+        try{
+            const taskValue = this.taskValueInput.value.trim();
+
+            if(!taskValue) return;
+
+            const response = await fetch(this.submitUrl, {
+                method: "POST",
+                headers: { "Content-type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ task: taskValue })
+            });
         
-        if(!response.ok){
-            throw new Error("Failed to create task");
-        }
+            if(!response.ok) throw new Error("Failed to create task"); 
         
-        createListItem(taskValueInput.value);
-        taskValueInput.value = "";
-    }
-    catch(error){
-        console.error(error);
-    }
-}
-
-async function retrieveData(){
-    try{
-        const response = await fetch("./retrieveData.php");
-        if(!response.ok){
-            throw new Error("Failed to retrieve task data");
+            this.createListItem(taskValue);
+            this.taskValueInput.value = "";
         }
+        catch(error){
+            console.error(error);
+        }
+    }
 
-        const data = await response.json();
-        data.forEach(task => {
-            createListItem(task.task, task.id);
+    async deleteData(id){
+        try{
+            const response = await fetch(`${this.deleteUrl}?id=${id}`, {method: "DELETE"});
+            if(!response.ok)throw new Error("Failed to delete task");
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+    createListItem(taskContents, id){
+        const listItem = document.createElement("li");
+        const buttonContainer = document.createElement("div");
+        const finishedBtn = document.createElement("button");
+        const deleteBtn = document.createElement("button");
+
+        listItem.textContent = taskContents;
+        finishedBtn.textContent = "✅";
+        deleteBtn.textContent = "🗑️";
+        deleteBtn.id = "deleteBtn";
+        deleteBtn.addEventListener("click", async () => {
+            await this.deleteData(id);
+            listItem.remove();
         });
-    }
-    catch(error){
-        console.error(error);
-    }
-}
 
-async function updateData(){
-    try{
-    }
-    catch(error){
-        console.error(error);
+        buttonContainer.appendChild(finishedBtn);
+        buttonContainer.appendChild(deleteBtn);
+        listItem.appendChild(buttonContainer);
+
+        document.getElementById("taskContainer").append(listItem);
     }
 }
 
-async function deleteData(id){
-    try{
-        const response = await fetch(`./deleteData.php?id=${id}`, {method: "DELETE"});
 
-        if(!response.ok){
-            throw new Error("Failed to delete task");
-        }
-    }
-    catch(error){
-        console.error(error);
-    }
-}
 
-function createListItem(taskContents, id){
-    const listItem = document.createElement("li");
-    const buttonContainer = document.createElement("div");
-    const finishedBtn = document.createElement("button");
-    const deleteBtn = document.createElement("button");
 
-    listItem.textContent = taskContents;
-    finishedBtn.textContent = "✅";
-    deleteBtn.textContent = "🗑️";
-    deleteBtn.id = "deleteBtn";
-    deleteBtn.addEventListener("click", async () => {
-        await deleteData(id);
-        listItem.remove();
-    });
 
-    buttonContainer.appendChild(finishedBtn);
-    buttonContainer.appendChild(deleteBtn);
-    listItem.appendChild(buttonContainer);
 
-    document.getElementById("taskContainer").append(listItem);
-}
