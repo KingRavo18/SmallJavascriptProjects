@@ -20,14 +20,10 @@ class TaskManager {
     async retrieveData(){
         try{
             const response = await fetch(this.retrieveUrl);
-            if(!response.ok){
-                throw new Error("Failed to retrieve task data");
-            }   
+            if(!response.ok) throw new Error("Failed to retrieve task data");  
 
             const data = await response.json();
-            data.forEach(task => {
-                this.createListItem(task.task, task.id);
-            });
+            data.forEach(task => this.createListItem(task.task, task.id));
         }
         catch(error){
             console.error(error);
@@ -41,15 +37,14 @@ class TaskManager {
             const taskValue = this.taskValueInput.value.trim();
 
             if(!taskValue) return;
-
             const response = await fetch(this.submitUrl, {
                 method: "POST",
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ task: taskValue })
             });
-        
+
             if(!response.ok) throw new Error("Failed to create task"); 
-        
+
             this.createListItem(taskValue);
             this.taskValueInput.value = "";
         }
