@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "ajaxtodolist");
+require "database.php";
 
 if(isset($_POST["task"])){
     $task = mysqli_real_escape_string($conn, $_POST["task"]);

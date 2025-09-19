@@ -20,9 +20,9 @@ class TaskManager {
     async retrieveData(){
         try{
             const response = await fetch(this.retrieveUrl);
-            if(!response.ok) throw new Error("Failed to retrieve task data");  
-
+            if(!response.ok) throw new Error("Failed to retrieve tasks");
             const data = await response.json();
+              
             data.forEach(task => this.createListItem(task.task, task.id));
         }
         catch(error){

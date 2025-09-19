@@ -1,9 +1,8 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "ajaxtodolist");
+require "database.php";
 
 $query = "SELECT * FROM tasks";
-
 $result = mysqli_query($conn, $query);
 
 $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);

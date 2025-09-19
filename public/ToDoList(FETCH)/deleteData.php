@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "ajaxtodolist");
+require "database.php";
 
 if(isset($_GET["id"])){
     $id = $_GET["id"];
