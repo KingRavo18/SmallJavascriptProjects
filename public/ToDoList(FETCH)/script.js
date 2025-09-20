@@ -35,14 +35,13 @@ class TaskManager {
         event.preventDefault();
         try{
             const taskValue = this.taskValueInput.value.trim();
+            if(!taskValue) return window.alert("Please input a task");
 
-            if(!taskValue) return;
             const response = await fetch(this.submitUrl, {
                 method: "POST",
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ task: taskValue })
             });
-
             if(!response.ok) throw new Error("Failed to create task"); 
 
             this.createListItem(taskValue);
