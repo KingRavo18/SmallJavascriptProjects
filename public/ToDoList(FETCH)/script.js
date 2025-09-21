@@ -31,7 +31,7 @@ class TaskManager {
     }
 
     async submitTask(event){
-        //prevents the forms default reload
+        //prevents the form's default reload
         event.preventDefault();
         try{
             const taskValue = this.taskValueInput.value.trim();
@@ -43,6 +43,13 @@ class TaskManager {
                 body: new URLSearchParams({ task: taskValue })
             });
             if(!response.ok) throw new Error("Failed to create task"); 
+
+            const data = await response.json();
+            if(!data.query_success){ 
+                return;
+            }else{
+                console.log(data.query_success);
+            }
 
             this.createListItem(taskValue);
             this.taskValueInput.value = "";
