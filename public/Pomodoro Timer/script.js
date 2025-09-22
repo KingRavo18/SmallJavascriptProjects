@@ -1,5 +1,8 @@
+document.addEventListener("DOMContentLoaded", setDisplay);
+
 const counterDisplay = document.getElementById("counterDisplay");
 const timeInput = document.getElementById("timeInput");
+timeInput.value = localStorage.getItem("chosenTime") || 1;
 const timerFinishedSound = document.getElementById("TimerFinishedSound");
 let startingTime;
 let intervalCounter = null;
@@ -9,6 +12,7 @@ let haveSecondsBeenCalculated = false;
 //Works as a timer reset if called directly
 function setDisplay(){
     counterDisplay.textContent = timeInput.value.padStart(2, "0") + ":00";
+    localStorage.setItem("chosenTime", timeInput.value);
     haveSecondsBeenCalculated = false;
     stop();
 }
@@ -30,7 +34,7 @@ function start(){
     }
 }
 
-function countTime() {
+function countTime(){
     startingTime--;
     if(startingTime < 0){
         clearInterval(intervalCounter);
@@ -49,5 +53,3 @@ function stop(){
         isRunning = false;
     }
 }
-
-//Add presets
