@@ -10,6 +10,7 @@ class TaskManager {
         this.deleteUrl = deleteUrl;
         this.form = document.getElementById("task-submit-form");
         this.taskValueInput = document.getElementById("taskInput");  
+        this.ToDoListContainer = document.getElementById("ToDoList-container");
     }
 
     init(){
@@ -19,10 +20,21 @@ class TaskManager {
 
     async retrieveData(){
         try{
+            const loading = document.createElement("p");
+            loading.textContent = "Loading...";
+            loading.classList = "loadingMessage";
+            this.ToDoListContainer.appendChild(loading);
+
             const response = await fetch(this.retrieveUrl);
-            if(!response.ok) throw new Error("Failed to retrieve tasks");
+            if(!response.ok){
+                loading.style.color = "red";
+                loading.textContent = "Failed to retrieve tasks.";
+                throw new Error("Failed to retrieve tasks");
+            } 
+
             const data = await response.json();
-              
+            
+            this.ToDoListContainer.removeChild(loading);
             data.forEach(task => this.createListItem(task.task, task.id));
         }
         catch(error){

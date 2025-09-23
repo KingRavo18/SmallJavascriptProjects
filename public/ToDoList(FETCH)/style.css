@@ -1,5 +1,6 @@
 body{
     background-color: rgb(57, 253, 194);
+    font-family: cursive;
     margin: 0;
     height: 100vh;
     display: grid;
@@ -23,6 +24,11 @@ body{
         &::placeholder{
             color: lightgray;
         }
+    }
+
+    & .loadingMessage{
+        background-color: rgb(57, 253, 194);
+        text-align: center;
     }
 
     & ul{
@@ -51,4 +57,6 @@ body{
             }
         }
     }
+
+    
 }
