@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const taskManager = new TaskManager("./retrieveData.php", "./sendData.php", "./deleteData.php");
+    const taskManager = new TaskManager("./php/retrieveTask.php", "./php/sendTask.php", "./php/deleteTask.php");
     taskManager.init();
 });
 
@@ -103,9 +103,3 @@ class TaskManager {
         document.getElementById("taskContainer").append(listItem);
     }
 }
-
-
-
-
-
-
