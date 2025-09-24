@@ -35,7 +35,7 @@ class TaskManager {
             const data = await response.json();
             
             this.ToDoListContainer.removeChild(loading);
-            data.forEach(task => this.createListItem(task.task, task.id));
+            data?.forEach(task => this.createListItem(task.task, task.id));
         }
         catch(error){
             console.error(error);
@@ -60,7 +60,7 @@ class TaskManager {
             if(!data.query_success){ 
                 return;
             }else{
-                console.log(data.query_success);
+                console.log(data?.query_success);
             }
 
             this.createListItem(taskValue);
