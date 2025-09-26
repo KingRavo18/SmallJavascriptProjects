@@ -33,6 +33,9 @@ class TaskManager {
             } 
 
             const data = await response.json();
+            if(data.length === 0){
+                this.noTasks();
+            }
             
             this.ToDoListContainer.removeChild(loading);
             data?.forEach(task => this.createListItem(task.task, task.id));
@@ -75,7 +78,7 @@ class TaskManager {
         }
     }
 
-    async deleteData(id){
+    async deleteTask(id){
         try{
             const response = await fetch(`${this.deleteUrl}?id=${id}`, {method: "DELETE"});
             if(!response.ok){
@@ -89,22 +92,31 @@ class TaskManager {
 
     createListItem(taskContents, id){
         const listItem = document.createElement("li");
+        const task = document.createElement("span");
         const buttonContainer = document.createElement("div");
         const finishedBtn = document.createElement("button");
         const deleteBtn = document.createElement("button");
 
-        listItem.textContent = taskContents;
+        task.textContent = taskContents;
         finishedBtn.textContent = "✅";
         deleteBtn.textContent = "🗑️";
         deleteBtn.id = "deleteBtn";
         deleteBtn.addEventListener("click", async () => {
-            await this.deleteData(id);
+            await this.deleteTask(id);
             listItem.remove();
         });
 
         buttonContainer.appendChild(finishedBtn);
         buttonContainer.appendChild(deleteBtn);
+        listItem.appendChild(task);
         listItem.appendChild(buttonContainer);
         document.getElementById("taskContainer").append(listItem);
+    }
+
+    noTasks(){
+        const empty = document.createElement("p");
+        empty.classList = "loadingMessage";
+        empty.textContent = "There are no tasks";
+        this.ToDoListContainer.appendChild(empty);
     }
 }

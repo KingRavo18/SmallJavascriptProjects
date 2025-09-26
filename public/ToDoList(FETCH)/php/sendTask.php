@@ -1,9 +1,5 @@
 <?php
-ini_set('display_errors', 0);
-error_reporting(E_ALL);
-header('Content-Type: application/json');
-
-require "database.php";
+require("database.php");
 mysqli_set_charset($conn, 'utf8mb4');
 
 if(isset($_POST["task"])){
@@ -14,7 +10,7 @@ if(isset($_POST["task"])){
         $last_id = mysqli_insert_id($conn);
         echo json_encode([
             "query_success" => "Task added succesfully",
-            "id" => $last_id  
+            "id" => $last_id
         ]);
     }
 }

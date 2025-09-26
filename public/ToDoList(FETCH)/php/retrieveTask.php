@@ -1,9 +1,5 @@
 <?php
-ini_set('display_errors', 0);
-error_reporting(E_ALL);
-header('Content-Type: application/json');
-
-require "database.php";
+require("database.php");
 
 $query = "SELECT * FROM tasks";
 $result = mysqli_query($conn, $query);
