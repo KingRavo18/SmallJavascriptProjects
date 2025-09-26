@@ -11,6 +11,10 @@ if(isset($_POST["task"])){
     $query = "INSERT INTO tasks(task) VALUES('$task')";
 
     if(mysqli_query($conn, $query)){
-        echo json_encode(["query_success" => "Task added succesfully"]);
+        $last_id = mysqli_insert_id($conn);
+        echo json_encode([
+            "query_success" => "Task added succesfully",
+            "id" => $last_id  
+        ]);
     }
 }

@@ -47,14 +47,18 @@ class TaskManager {
         event.preventDefault();
         try{
             const taskValue = this.taskValueInput.value.trim();
-            if(!taskValue) return window.alert("Please input a task");
+            if(!taskValue){
+                return window.alert("Please input a task");
+            }
 
             const response = await fetch(this.submitUrl, {
                 method: "POST",
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ task: taskValue })
             });
-            if(!response.ok) throw new Error("Failed to create task"); 
+            if(!response.ok){
+                throw new Error("Failed to create task"); 
+            }
 
             const data = await response.json();
             if(!data.query_success){ 
@@ -63,7 +67,7 @@ class TaskManager {
                 console.log(data?.query_success);
             }
 
-            this.createListItem(taskValue);
+            this.createListItem(taskValue, data.id);
             this.taskValueInput.value = "";
         }
         catch(error){
@@ -74,7 +78,9 @@ class TaskManager {
     async deleteData(id){
         try{
             const response = await fetch(`${this.deleteUrl}?id=${id}`, {method: "DELETE"});
-            if(!response.ok)throw new Error("Failed to delete task");
+            if(!response.ok){
+                throw new Error("Failed to delete task");
+            }
         }
         catch(error){
             console.error(error);
@@ -99,7 +105,6 @@ class TaskManager {
         buttonContainer.appendChild(finishedBtn);
         buttonContainer.appendChild(deleteBtn);
         listItem.appendChild(buttonContainer);
-
         document.getElementById("taskContainer").append(listItem);
     }
 }
