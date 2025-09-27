@@ -33,12 +33,12 @@ class TaskManager {
             } 
 
             const data = await response.json();
-            if(data.length === 0){
-                this.noTasks();
-            }
-            
             this.ToDoListContainer.removeChild(loading);
-            data?.forEach(task => this.createListItem(task.task, task.id));
+            if(data.no_tasks){
+                this.noTasks();
+            }else{
+                data?.forEach(task => this.createListItem(task.task, task.id));
+            }
         }
         catch(error){
             console.error(error);
