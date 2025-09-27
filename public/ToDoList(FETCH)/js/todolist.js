@@ -64,12 +64,13 @@ class TaskManager {
             }
 
             const data = await response.json();
-            if(!data.query_success){ 
-                return;
-            }else{
-                console.log(data?.query_success);
+            if(data.query_success){
+                console.log(data.query_success);
             }
-
+            else if(data.query_fail){
+                console.error(data.query_fail);
+            }
+            
             this.createListItem(taskValue, data.id);
             this.taskValueInput.value = "";
         }
