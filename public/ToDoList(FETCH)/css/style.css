@@ -4,10 +4,11 @@
 
     & input{
         font-size: 150%;
+        padding: 10px 10px 10px 10px;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
-        border-bottom-left-radius: none;
-        border-bottom-right-radius: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
 
         &::placeholder{
             color: lightgray;

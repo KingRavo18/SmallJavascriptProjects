@@ -13,7 +13,7 @@ if(isset($_POST["registerBTN"])){
     }
 
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+    $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password_hash')";
 
     try{
         mysqli_query($conn, $sql);
