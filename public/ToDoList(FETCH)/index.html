@@ -4,18 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Assets/sidebar/sidebar.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <title>ToDoList (FETCH)</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/register.css">
+    <title>Document</title>
 </head>
 <body>
-    <div class="ToDoList-container" id="ToDoList-container">
-        <form id="task-submit-form">
-            <input type="text" id="taskInput" name="task" placeholder="Enter your task" required>
+    <h1>To-do List</h1>
+    <div class="form-containers">
+        <form action="./php/login.php" method="POST">
+            <h2>LOGIN</h2>
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Login">
         </form>
-        <ul id="taskContainer"></ul>
+        <form action="./php/register.php" method="POST">
+            <h2>REGISTER</h2>
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Register">
+        </form>
     </div>
     <div id="sidebar-container"></div>
     <script src="../Assets/sidebar/sidebar.js"></script>
-    <script src="./js/todolist.js"></script>
+    <script src="./js/login&register.js"></script>
 </body>
 </html>

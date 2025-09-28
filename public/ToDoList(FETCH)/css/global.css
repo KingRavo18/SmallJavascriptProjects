@@ -1,0 +1,8 @@
+body{
+    background-color: rgb(57, 253, 194);
+    font-family: cursive;
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
