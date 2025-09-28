@@ -3,6 +3,27 @@ body{
     font-family: cursive;
     margin: 0;
     height: 100vh;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ & input{
+    font-family: cursive;
+    padding: 5px 0 5px 10px;
+    width: 94%;
+    font-size: 100%;
+    box-shadow: 0 0 5px rgb(136, 136, 136);
+    border: none;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 5px;
+
+    &::placeholder{
+        color: lightgray;
+    }
+
+    &:hover{
+        background-color: rgb(230, 230, 230);
+    }
 }

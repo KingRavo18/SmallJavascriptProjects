@@ -9,21 +9,23 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>To-do List</h1>
-    <div class="form-containers">
-        <form action="./php/login.php" method="POST">
-            <h2>LOGIN</h2>
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Login">
-        </form>
-        <form action="./php/register.php" method="POST">
-            <h2>REGISTER</h2>
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Register">
-        </form>
-    </div>
+    <main>
+        <h1>To-do List</h1>
+        <div class="form-containers">
+            <form action="./php/login.php" method="POST">
+                <h2>LOGIN</h2>
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <input type="submit" name="loginBTN" value="Login">
+            </form>
+            <form action="./php/register.php" method="POST">
+                <h2>REGISTER</h2>
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <input type="submit" name="registerBTN" value="Register">
+            </form>
+        </div>
+    </main>
     <div id="sidebar-container"></div>
     <script src="../Assets/sidebar/sidebar.js"></script>
     <script src="./js/login&register.js"></script>
