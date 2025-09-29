@@ -1,7 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
+    sessionValidation();
     const taskManager = new TaskManager("./php/retrieveTask.php", "./php/sendTask.php", "./php/deleteTask.php");
     taskManager.init();
 });
+
+async function sessionValidation(){
+    try{
+        const response = await fetch("./php/sessionValidation.php");
+        if(!response.ok){
+            throw new Error("Failed to validate this session");
+        }
+        const data = await response.json();
+        if(data.session_validation === "failed"){
+            throw new Error("Session validation failed");
+        }
+        else{
+            return;
+        }
+    }
+    catch(error){
+        console.error(error);
+        window.location.href = "./index.html";
+    }
+}
 
 class TaskManager {
     constructor(retrieveUrl, submitUrl, deleteUrl){
@@ -121,3 +142,4 @@ class TaskManager {
         this.ToDoListContainer.appendChild(empty);
     }
 }
+

@@ -26,6 +26,8 @@ if(isset($_POST["loginBTN"])){
             throw new Exception("You have entered an incorrect password");
         }
 
+        $_SESSION["username"] = $username;
+        $_SESSION["id"] = $user["id"];
         $_SESSION["user_id"] = $user["id"];
 
         header("Location: ../toDoList.html");
