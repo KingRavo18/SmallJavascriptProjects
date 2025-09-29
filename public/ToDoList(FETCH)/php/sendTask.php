@@ -4,8 +4,9 @@ mysqli_set_charset($conn, 'utf8mb4');
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if(isset($_POST["task"])){
+    $user_id = $_SESSION["user_id"];
     $task = mysqli_real_escape_string($conn, $_POST["task"]);
-    $query = "INSERT INTO tasks(task) VALUES('$task')";
+    $query = "INSERT INTO tasks(user_id, task) VALUES('$user_id', '$task')";
     try{
         mysqli_query($conn, $query);
         $last_id = mysqli_insert_id($conn);

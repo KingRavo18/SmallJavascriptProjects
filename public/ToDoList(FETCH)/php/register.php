@@ -24,6 +24,7 @@ if(isset($_POST["registerBTN"])){
         
     }
     finally{
+        session_destroy();
         header("Location: ../index.html");
     }
     

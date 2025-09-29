@@ -46,6 +46,21 @@
             }
         }
     }
+}
 
-    
+.logout-container{
+    position: fixed;
+    left: 50px;
+    top: 50px;
+
+    & input{
+        padding: 5px 10px;
+        background-color: yellow;
+        transition: 0.5s;
+        cursor: pointer;
+
+        &:hover{
+            background-color: rgb(231, 231, 2);
+        }
+    }
 }
