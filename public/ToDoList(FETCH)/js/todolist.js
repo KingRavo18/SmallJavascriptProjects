@@ -20,7 +20,7 @@ async function sessionValidation(){
     }
     catch(error){
         console.error(error);
-        window.location.href = "./index.html";
+        window.location.replace("./index.html");
     }
 }
 
