@@ -1,4 +1,4 @@
-body{
+body {
     background-color: rgb(57, 253, 194);
     font-family: cursive;
     margin: 0;
@@ -8,7 +8,7 @@ body{
     justify-content: center;
 }
 
- & input{
+input {
     font-family: cursive;
     padding: 5px 0 5px 10px;
     width: 94%;
@@ -19,11 +19,11 @@ body{
     transition: 0.5s;
     border-radius: 5px;
 
-    &::placeholder{
+    &::placeholder {
         color: lightgray;
     }
 
-    &:hover{
+    &:hover {
         background-color: rgb(230, 230, 230);
     }
 }

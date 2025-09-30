@@ -9,9 +9,14 @@ $db_username = "root";
 $db_password = "";
 $db_name = "ajaxtodolist";
 
-$conn = mysqli_connect($db_server, $db_username, $db_password, $db_name);
+$attribute_options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+];
 
-if(!$conn){
-  echo json_encode(["db_error" => "Database connection failed"]);
-  exit;
+try {
+    $dsn = "mysql:host={$db_server};dbname={$db_name}";
+    $conn = new PDO($dsn, $db_username, $db_password, $attribute_options);
+} catch (PDOException $e) {
+    echo json_encode(["query_fail" => "Database connection failed: {$e->getMessage()}"]);
 }

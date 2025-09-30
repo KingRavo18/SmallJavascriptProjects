@@ -1,8 +1,8 @@
-.ToDoList-container{
+.ToDoList-container {
     width: 400px;
     padding: 0;
 
-    & input{
+    & input {
         font-size: 150%;
         padding: 10px 10px 10px 10px;
         border-top-left-radius: 20px;
@@ -10,17 +10,17 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
 
-        &::placeholder{
+        &::placeholder {
             color: lightgray;
         }
     }
 
-    & .loadingMessage{
+    & .loadingMessage {
         background-color: rgb(57, 253, 194);
         text-align: center;
     }
 
-    & ul{
+    & ul {
         font-family: cursive;
         margin: 0;
         padding: 0;
@@ -31,13 +31,13 @@
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
 
-        & li{
+        & li {
             display: flex;
-            justify-content:space-between;
+            justify-content: space-between;
             align-items: center;
-            padding: 20px 10px; 
+            padding: 20px 10px;
 
-            & button{
+            & button {
                 border: none;
                 font-size: 110%;
                 background-color: yellow;
@@ -48,18 +48,18 @@
     }
 }
 
-.logout-container{
+.logout-container {
     position: fixed;
     left: 50px;
     top: 50px;
 
-    & input{
+    & input {
         padding: 5px 10px;
         background-color: yellow;
         transition: 0.5s;
         cursor: pointer;
 
-        &:hover{
+        &:hover {
             background-color: rgb(231, 231, 2);
         }
     }

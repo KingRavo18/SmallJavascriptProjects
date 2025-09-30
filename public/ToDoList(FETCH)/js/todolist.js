@@ -4,74 +4,74 @@ document.addEventListener("DOMContentLoaded", () => {
     taskManager.init();
 });
 
-async function sessionValidation(){
-    try{
+async function sessionValidation() {
+    try {
         const response = await fetch("./php/sessionValidation.php");
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error("Failed to validate this session");
         }
         const data = await response.json();
-        if(data.session_validation === "failed"){
+        if (data.session_validation === "failed") {
             throw new Error("Session validation failed");
         }
-        else{
+        else {
             return;
         }
     }
-    catch(error){
+    catch (error) {
         console.error(error);
         window.location.replace("./index.html");
     }
 }
 
 class TaskManager {
-    constructor(retrieveUrl, submitUrl, deleteUrl){
+    constructor(retrieveUrl, submitUrl, deleteUrl) {
         this.retrieveUrl = retrieveUrl;
         this.submitUrl = submitUrl;
         this.deleteUrl = deleteUrl;
         this.form = document.getElementById("task-submit-form");
-        this.taskValueInput = document.getElementById("taskInput");  
+        this.taskValueInput = document.getElementById("taskInput");
         this.ToDoListContainer = document.getElementById("ToDoList-container");
     }
 
-    init(){
+    init() {
         this.retrieveData();
         this.form.addEventListener("submit", (event) => this.submitTask(event));
     }
 
-    async retrieveData(){
-        try{
+    async retrieveData() {
+        try {
             const loading = document.createElement("p");
             loading.textContent = "Loading...";
             loading.classList = "loadingMessage";
             this.ToDoListContainer.appendChild(loading);
 
             const response = await fetch(this.retrieveUrl);
-            if(!response.ok){
+            if (!response.ok) {
                 loading.style.color = "red";
                 loading.textContent = "Failed to retrieve tasks.";
                 throw new Error("Failed to retrieve tasks");
-            } 
+            }
 
             const data = await response.json();
             this.ToDoListContainer.removeChild(loading);
-            if(data.no_tasks){
+            if (data.no_tasks) {
                 this.noTasks();
-            }else{
+            } else {
                 data?.forEach(task => this.createListItem(task.task, task.id));
             }
         }
-        catch(error){
+        catch (error) {
             console.error(error);
         }
     }
 
-    async submitTask(event){
+    async submitTask(event) {
         //prevents the form's default reload
         event.preventDefault();
-        try{
+        try {
             const taskValue = this.taskValueInput.value.trim();
-            if(!taskValue){
+            if (!taskValue) {
                 return window.alert("Please input a task");
             }
 
@@ -80,39 +80,39 @@ class TaskManager {
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ task: taskValue })
             });
-            if(!response.ok){
-                throw new Error("Failed to create task"); 
+            if (!response.ok) {
+                throw new Error("Failed to create task");
             }
 
             const data = await response.json();
-            if(data.query_success){
+            if (data.query_success) {
                 console.log(data.query_success);
             }
-            else if(data.query_fail){
+            else if (data.query_fail) {
                 console.error(data.query_fail);
             }
-            
+
             this.createListItem(taskValue, data.id);
             this.taskValueInput.value = "";
         }
-        catch(error){
+        catch (error) {
             console.error(error);
         }
     }
 
-    async deleteTask(id){
-        try{
-            const response = await fetch(`${this.deleteUrl}?id=${id}`, {method: "DELETE"});
-            if(!response.ok){
+    async deleteTask(id) {
+        try {
+            const response = await fetch(`${this.deleteUrl}?id=${id}`, { method: "DELETE" });
+            if (!response.ok) {
                 throw new Error("Failed to delete task");
             }
         }
-        catch(error){
+        catch (error) {
             console.error(error);
         }
     }
 
-    createListItem(taskContents, id){
+    createListItem(taskContents, id) {
         const listItem = document.createElement("li");
         const task = document.createElement("span");
         const buttonContainer = document.createElement("div");
@@ -135,7 +135,7 @@ class TaskManager {
         document.getElementById("taskContainer").append(listItem);
     }
 
-    noTasks(){
+    noTasks() {
         const empty = document.createElement("p");
         empty.classList = "loadingMessage";
         empty.textContent = "There are no tasks";
