@@ -14,16 +14,17 @@
     <main>
         <h1>To-do List</h1>
         <div class="form-containers">
-            <form id="loginForm" action="./php/login.php">
+            <form id="loginForm" action="./toDoList.html" method="POST">
                 <h2>LOGIN</h2>
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <input type="submit" name="loginBTN" value="Login">
+                <input id="log-username" type="text" name="username" placeholder="Username">
+                <input id="log-password" type="password" name="password" placeholder="Password">
+                <span id="login-message"></span>
+                <input type="submit" value="Login">
             </form>
             <form id="registrationForm">
                 <h2>REGISTER</h2>
-                <input id="username" type="text" name="username" placeholder="Username">
-                <input id="password" type="password" name="password" placeholder="Password">
+                <input id="reg-username" type="text" name="username" placeholder="Username">
+                <input id="reg-password" type="password" name="password" placeholder="Password">
                 <span id="registration-message"></span>
                 <input type="submit" value="Register">
             </form>

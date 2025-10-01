@@ -1,11 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("registrationForm").addEventListener("submit", (event) => registration(event));
+    document.getElementById("loginForm").addEventListener("submit", (event) => login(event));
 });
+
+async function login(event) {
+    const username = document.getElementById("log-username");
+    const password = document.getElementById("log-password");
+    const responseMessage = document.getElementById("login-message");
+    responseMessage.textContent = "";
+
+    try {
+        inputValidation(username, password);
+        const response = await fetch("./php/login.php", {
+            method: "POST",
+            headers: { "Content-type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ username: username.value, password: password.value })
+        });
+        if (!response.ok) {
+            throw new Error("Could not log in");
+        }
+
+    } catch (error) {
+        event.preventDefault();
+        username.value = "";
+        password.value = "";
+        responseMessage.style.color = "red";
+        responseMessage.textContent = error.message;
+    }
+}
 
 async function registration(event) {
     event.preventDefault();
-    const username = document.getElementById("username");
-    const password = document.getElementById("password");
+    const username = document.getElementById("reg-username");
+    const password = document.getElementById("reg-password");
     const responseMessage = document.getElementById("registration-message");
     responseMessage.style.color = "green";
     responseMessage.textContent = "";
