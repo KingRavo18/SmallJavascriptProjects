@@ -14,16 +14,17 @@ if (empty(trim($password))) {
 }
 
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
 try {
     $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
     $stmt->execute([$username, $password_hash]);
     echo json_encode(["query_success" => "You are now registered"]);
 } catch (PDOException $e) {
-    echo json_encode(["query_fail" => "Caught exception: {$e->getMessage()}"]);
+    echo json_encode([
+        "query_fail" => "Caught exception: {$e->getMessage()}",
+        "query_fail_user" => "This username already exists"
+    ]);
 } finally {
     session_destroy();
-    header("Location: ../index.html");
 }
 
 $stmt = null;

@@ -23,7 +23,12 @@ async function registration(event) {
         }
 
         const data = await response.json();
+        if (data.query_fail) {
+            console.error(data.query_fail);
+            throw new Error(data.query_fail_user);
+        }
 
+        responseMessage.textContent = data.query_success;
         username.value = "";
         password.value = "";
     } catch (error) {

@@ -10,7 +10,7 @@ if (isset($_POST["task"])) {
     }
 
     try {
-        $stmt = $conn->prepare("INSERT INTO tasks(user_id, task) VALUES(?, ?)");
+        $stmt = $conn->prepare("INSERT INTO tasks(user_id, task) VALUES (?, ?)");
         $stmt->execute([$user_id, $task]);
         $last_id = $conn->lastInsertId();
         echo json_encode([
