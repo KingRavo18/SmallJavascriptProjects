@@ -106,6 +106,13 @@ class TaskManager {
             if (!response.ok) {
                 throw new Error("Failed to delete task");
             }
+            const data = await response.json();
+            if (data.query_success) {
+                console.log(data.query_success);
+            }
+            else if (data.query_fail) {
+                console.error(data.query_fail);
+            }
         }
         catch (error) {
             console.error(error);
@@ -142,4 +149,3 @@ class TaskManager {
         this.ToDoListContainer.appendChild(empty);
     }
 }
-

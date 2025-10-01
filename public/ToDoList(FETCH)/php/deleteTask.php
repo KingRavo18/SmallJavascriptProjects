@@ -3,13 +3,14 @@ require("database.php");
 
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $query = "DELETE FROM tasks WHERE id = {$id}";
-
-    if (mysqli_query($conn, $query)) {
-        echo "Task Deleted Successfully";
-    } else {
-        echo "ERROR: {mysqli_error($conn)}";
+    try {
+        $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
+        $stmt->execute([$id]);
+        echo json_encode(["query_success" => "Task Deleted Successfully"]);
+    } catch (PDOException $e) {
+        echo json_encode(["query_fail" => "Caught exception: {$e->getMessage()}"]);
     }
 }
 
-mysqli_close($conn);
+$stmt = null;
+$conn = null;
