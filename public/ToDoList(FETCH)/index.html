@@ -20,11 +20,12 @@
                 <input type="password" name="password" placeholder="Password">
                 <input type="submit" name="loginBTN" value="Login">
             </form>
-            <form action="./php/register.php" method="POST">
+            <form id="registrationForm">
                 <h2>REGISTER</h2>
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <input type="submit" name="registerBTN" value="Register">
+                <input id="username" type="text" name="username" placeholder="Username">
+                <input id="password" type="password" name="password" placeholder="Password">
+                <span id="registration-message"></span>
+                <input type="submit" value="Register">
             </form>
         </div>
     </main>
