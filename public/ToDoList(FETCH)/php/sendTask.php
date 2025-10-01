@@ -15,7 +15,8 @@ if (isset($_POST["task"])) {
         $last_id = $conn->lastInsertId();
         echo json_encode([
             "query_success" => "Task added succesfully",
-            "id" => $last_id
+            "id" => $last_id,
+            "isComplete" => 0
         ]);
     } catch (PDOException $e) {
         echo json_encode(["query_fail" => "Caught exception: {$e->getMessage()}"]);
