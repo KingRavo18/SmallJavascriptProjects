@@ -5,145 +5,162 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutPopupControl();
 });
 
-async function sessionValidation() {
-    try {
+async function sessionValidation(){
+    try{
         const response = await fetch("./php/sessionValidation.php");
-        if (!response.ok) {
+        if(!response.ok){
             throw new Error("Failed to validate this session");
         }
+
         const data = await response.json();
-        if (data.session_validation === "failed") {
+        if (data.session_validation === "failed"){
             throw new Error("Session validation failed");
         }
-        else {
+        else{
             return;
         }
     }
-    catch (error) {
+    catch(error){
         console.error(error);
         window.location.replace("./index.html");
     }
 }
 
-class TaskManager {
-    constructor(retrieveUrl, submitUrl, updateUrl, deleteUrl) {
+class TaskManager{
+    constructor(retrieveUrl, submitUrl, updateUrl, deleteUrl){
         this.retrieveUrl = retrieveUrl;
         this.submitUrl = submitUrl;
         this.updateUrl = updateUrl;
         this.deleteUrl = deleteUrl;
-        this.form = document.getElementById("task-submit-form");
-        this.taskValueInput = document.getElementById("taskInput");
         this.ToDoListContainer = document.getElementById("ToDoList-container");
+        this.empty = document.createElement("p");
+        this.taskAmount;
     }
 
-    init() {
+    init(){
         this.retrieveData();
-        this.form.addEventListener("submit", (event) => this.submitTask(event));
+        document.getElementById("task-submit-form").addEventListener("submit", (event) => this.submitTask(event));
     }
 
-    async retrieveData() {
-        try {
-            const loading = document.createElement("p");
-            loading.textContent = "Loading...";
-            loading.classList = "loadingMessage";
-            this.ToDoListContainer.appendChild(loading);
+    async retrieveData(){
+        const loading = document.createElement("p");
+        loading.textContent = "Loading...";
+        loading.classList.add("loadingMessage");
+        this.ToDoListContainer.appendChild(loading);
 
+        try{
             const response = await fetch(this.retrieveUrl);
-            if (!response.ok) {
-                loading.style.color = "red";
-                loading.textContent = "Failed to retrieve tasks.";
+            const data = await response.json();
+            this.taskAmount = Number(data.row_count);
+            this.ToDoListContainer.removeChild(loading);
+
+            if(!response.ok){
                 throw new Error("Failed to retrieve tasks");
             }
 
-            const data = await response.json();
-            this.ToDoListContainer.removeChild(loading);
-            if (data.no_tasks) {
+            if(this.taskAmount === 0){
                 this.noTasks();
-            } else {
-                data?.forEach(task => this.createListItem(task.task, task.id, task.isComplete));
-            }
+            } 
+            else{
+                data.tasks?.forEach(task => this.createListItem(task.task, task.id, task.isComplete));
+            }    
         }
-        catch (error) {
-            console.error(error);
+        catch(error){
+            loading.classList.remove("loadingMessage");
+            loading.classList.add("error-message");
+            loading.textContent = error.message;
         }
     }
 
-    async submitTask(event) {
-        //prevents the form's default reload
+    async submitTask(event){
         event.preventDefault();
-        try {
-            const taskValue = this.taskValueInput.value.trim();
-            if (!taskValue) {
-                return window.alert("Please input a task");
-            }
+        const taskValueInput = document.getElementById("taskInput");
+        const taskValue = taskValueInput.value.trim();
+        if(!taskValue){
+            return window.alert("Please input a task");
+        }
 
+        try{
             const response = await fetch(this.submitUrl, {
                 method: "POST",
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ task: taskValue })
             });
-            if (!response.ok) {
+            const data = await response.json();
+            
+            if(data.query_fail){
+                throw new Error(data.query_fail);
+            }
+            if(data.query_fail_pdo){
+                console.error(data.query_fail_pdo);
+            }
+            if(!response.ok){
                 throw new Error("Failed to create task");
             }
 
-            const data = await response.json();
-            if (data.query_success) {
-                console.log(data.query_success);
+            taskValueInput.value = "";
+            if(this.taskAmount === 0){
+                this.ToDoListContainer.removeChild(this.empty);
             }
-            else if (data.query_fail) {
-                console.error(data.query_fail);
-            }
-
+            this.taskAmount += 1;
             this.createListItem(taskValue, data.id, data.isComplete);
-            this.taskValueInput.value = "";
         }
-        catch (error) {
+        catch(error){
             console.error(error);
         }
     }
 
-    async updateTask(id, isComplete) {
-        try {
+    async updateTask(id, isComplete){
+        try{
             const response = await fetch(this.updateUrl, {
                 method: "POST",
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ id: id, isComplete: isComplete })
             });
-            if (!response.ok) {
+            const data = await response.json();
+            
+            if(data.query_fail){
+                throw new Error(data.query_fail);
+            }
+            if(data.query_fail_pdo){
+                throw new Error(data.query_fail_pdo);
+            }
+            if(!response.ok){
                 throw new Error("Failed to update task");
             }
-            const data = await response.json();
-            if (data.query_success) {
-                console.log(data.query_success);
-            }
-            else if (data.query_fail) {
-                console.error(data.query_fail);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async deleteTask(id) {
-        try {
-            const response = await fetch(`${this.deleteUrl}?id=${id}`, { method: "DELETE" });
-            if (!response.ok) {
-                throw new Error("Failed to delete task");
-            }
-            const data = await response.json();
-            if (data.query_success) {
-                console.log(data.query_success);
-            }
-            else if (data.query_fail) {
-                console.error(data.query_fail);
-            }
-        }
-        catch (error) {
+        } 
+        catch(error){
             console.error(error);
         }
     }
 
-    createListItem(taskContents, id, isComplete) {
+    async deleteTask(id){
+        try{
+            const response = await fetch(`${this.deleteUrl}?id=${id}`, { method: "DELETE" });
+            const data = await response.json();
+
+            if(data.query_fail){
+                throw new Error(data.query_fail);
+            }
+            if(data.query_fail_pdo){
+                throw new Error(data.query_fail_pdo);
+            }
+            if(!response.ok){
+                throw new Error("Failed to delete task");
+            }
+
+            this.taskAmount -= 1;
+            if(this.taskAmount === 0){
+                this.noTasks();
+            }
+            
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+    createListItem(taskContents, id, isComplete){
         const listItem = document.createElement("li");
         const task = document.createElement("span");
         const buttonContainer = document.createElement("div");
@@ -173,24 +190,24 @@ class TaskManager {
     }
 
     updateTaskDesign(isComplete, finishedBtn, task) {
-        if (isComplete) {
+        if(isComplete){
             finishedBtn.textContent = "❎";
             task.style.textDecoration = "line-through";
-        } else {
+        } 
+        else{
             finishedBtn.textContent = "✅";
             task.style.textDecoration = "none";
         }
     }
 
-    noTasks() {
-        const empty = document.createElement("p");
-        empty.classList = "loadingMessage";
-        empty.textContent = "There are no tasks";
-        this.ToDoListContainer.appendChild(empty);
+    noTasks(){
+        this.empty.classList = "loadingMessage";
+        this.empty.textContent = "There are no tasks";
+        this.ToDoListContainer.appendChild(this.empty);
     }
 }
 
-function logoutPopupControl() {
+function logoutPopupControl(){
     const openLogoutPopup = () => document.getElementById("popup-container").style.display = "grid";
     const closeLogoutPopup = () => document.getElementById("popup-container").style.display = "none";
 

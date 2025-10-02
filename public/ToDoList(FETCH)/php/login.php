@@ -22,11 +22,10 @@ try{
 
     $_SESSION["username"] = $username;
     $_SESSION["id"] = $user->id;
-    $_SESSION["user_id"] = $user->id;
     echo json_encode(["query_success" => "Login success"]);
 } 
 catch(PDOException $e){
-    echo json_encode(["query_fail_notUser" => $e->getMessage()]);
+    echo json_encode(["query_fail_pdo" => $e->getMessage()]);
     session_destroy();
 }
 catch(Exception $e){

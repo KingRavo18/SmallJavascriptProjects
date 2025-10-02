@@ -27,3 +27,17 @@ input {
         background-color: rgb(230, 230, 230);
     }
 }
+
+.error-message,
+.success-message{
+    text-align: center;
+    font-size: 80%;
+}
+
+.error-message{
+    color: red;
+}
+
+.success-message{
+    color: green;
+}
