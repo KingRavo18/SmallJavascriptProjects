@@ -11,7 +11,7 @@
 
 <body>
     <div class="logout-container">
-        <button>Log Out</button>
+        <button id="logOutBtn">Log Out</button>
     </div>
     <div class="ToDoList-container" id="ToDoList-container">
         <form id="task-submit-form">
@@ -20,12 +20,14 @@
         <ul id="taskContainer"></ul>
     </div>
     <div id="popup-container">
-        <div id="logout-popup">
+        <div class="logout-popup">
             <h2>Are you sure?</h2>
-            <form action="./php/logout.php" method="POST">
-                <input type="submit" name="logout" value="Log Out">
-            </form>
-            <button>No</button>
+            <div class="btnContainer">
+                <form action="./php/logout.php" method="POST">
+                    <input type="submit" name="logout" value="Yes">
+                </form>
+                <button id="logoutDeny">No</button>
+            </div>
         </div>
     </div>
     <script src="./js/todolist.js"></script>

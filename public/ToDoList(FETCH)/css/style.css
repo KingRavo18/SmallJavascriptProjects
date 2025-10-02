@@ -53,14 +53,61 @@
     left: 50px;
     top: 50px;
 
-    & input {
+    & button {
         padding: 5px 10px;
         background-color: yellow;
         transition: 0.5s;
         cursor: pointer;
+        font-family: cursive;
+        border: none;
+        border-radius: 5px;
+        font-size: 100%;
+        box-shadow: 0 0 5px rgb(136, 136, 136);
 
         &:hover {
             background-color: rgb(231, 231, 2);
+        }
+    }
+}
+
+#popup-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    display: none;
+    place-items: center;
+    z-index: 2;
+    height: 100vh;
+    width: 100vw;
+
+    & .logout-popup {
+        background-color: yellow;
+        border-radius: 20px;
+        box-shadow: 0 0 5px rgb(136, 136, 136);
+        padding: 0 10px 10px 10px;
+
+        & .btnContainer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            & input,
+            & button {
+                padding: 5px 10px;
+            }
+
+            & button {
+                font-size: 100%;
+                box-shadow: 0 0 5px rgb(136, 136, 136);
+                border: none;
+                cursor: pointer;
+                transition: 0.5s;
+                border-radius: 5px;
+                font-family: cursive;
+
+                &:hover {
+                    background-color: rgb(230, 230, 230);
+                }
+            }
         }
     }
 }

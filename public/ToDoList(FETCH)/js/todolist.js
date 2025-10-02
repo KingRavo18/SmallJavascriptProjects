@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionValidation();
     const taskManager = new TaskManager("./php/retrieveTask.php", "./php/sendTask.php", "./php/updateTask.php", "./php/deleteTask.php");
     taskManager.init();
+    logoutPopupControl();
 });
 
 async function sessionValidation() {
@@ -188,3 +189,13 @@ class TaskManager {
         this.ToDoListContainer.appendChild(empty);
     }
 }
+
+function logoutPopupControl() {
+    const openLogoutPopup = () => document.getElementById("popup-container").style.display = "grid";
+    const closeLogoutPopup = () => document.getElementById("popup-container").style.display = "none";
+
+    document.getElementById("logOutBtn").onclick = openLogoutPopup;
+    document.getElementById("logoutDeny").onclick = closeLogoutPopup;
+}
+
+
