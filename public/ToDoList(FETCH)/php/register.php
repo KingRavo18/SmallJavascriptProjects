@@ -12,6 +12,11 @@ if (empty(trim($password))) {
     echo json_encode(["query_fail" => "Please enter a password"]);
     exit;
 }
+if (strlen($password) < 8) {
+    echo json_encode(["query_fail" => "A password must be at least 8 symbols long"]);
+    exit;
+}
+
 
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 try {
@@ -20,8 +25,7 @@ try {
     echo json_encode(["query_success" => "You are now registered"]);
 } catch (PDOException $e) {
     echo json_encode([
-        "query_fail" => "Caught exception: {$e->getMessage()}",
-        "query_fail_user" => "This username already exists"
+        "query_fail" => "This username already exists",
     ]);
 } finally {
     session_destroy();
