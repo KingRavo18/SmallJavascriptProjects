@@ -17,16 +17,15 @@ if (strlen($password) < 8) {
     exit;
 }
 
-
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 try {
     $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
     $stmt->execute([$username, $password_hash]);
     echo json_encode(["query_success" => "You are now registered"]);
 } catch (PDOException $e) {
-    echo json_encode([
-        "query_fail" => "This username already exists",
-    ]);
+    echo json_encode(["query_fail_notUser" => $e->getMessage()]);
+} catch (Exception $e) {
+    echo json_encode(["query_fail" => "This username already exists"]);
 } finally {
     session_destroy();
 }

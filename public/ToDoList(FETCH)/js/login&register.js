@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("registrationForm").addEventListener("submit", (event) => registration(event));
-    document.getElementById("loginForm").addEventListener("submit", (event) => login(event));
+    document.getElementById("registrationForm").addEventListener("submit", registration);
+    document.getElementById("loginForm").addEventListener("submit", login);
 });
 
 async function login(event) {
+    event.preventDefault();
     const username = document.getElementById("log-username");
     const password = document.getElementById("log-password");
     const responseMessage = document.getElementById("login-message");
@@ -16,14 +17,18 @@ async function login(event) {
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({ username: username.value, password: password.value })
         });
+
+        const data = await response.json();
+        if (data.query_fail) {
+            throw new Error(data.query_fail);
+        }
         if (!response.ok) {
             throw new Error("Could not log in");
         }
 
-    } catch (error) {
-        event.preventDefault();
-        username.value = "";
-        password.value = "";
+        window.location.href = "./toDoList.html";
+    } 
+    catch (error) {
         responseMessage.style.color = "red";
         responseMessage.textContent = error.message;
     }
@@ -36,7 +41,6 @@ async function registration(event) {
     const responseMessage = document.getElementById("registration-message");
     responseMessage.style.color = "green";
     responseMessage.textContent = "";
-
     try {
         inputValidation(username, password)
 
@@ -45,19 +49,20 @@ async function registration(event) {
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({ username: username.value, password: password.value })
         });
-        if (!response.ok) {
-            throw new Error("Could not register");
-        }
 
         const data = await response.json();
         if (data.query_fail) {
             throw new Error(data.query_fail);
         }
-
+        if (!response.ok) {
+            throw new Error("Could not register");
+        }
+        
         responseMessage.textContent = data.query_success;
         username.value = "";
         password.value = "";
-    } catch (error) {
+    } 
+    catch (error) {
         responseMessage.style.color = "red";
         responseMessage.textContent = error.message;
     }

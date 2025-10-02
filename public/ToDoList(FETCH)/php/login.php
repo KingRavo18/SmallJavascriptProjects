@@ -1,38 +1,37 @@
 <?php
 require("database.php");
-session_start();
 
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
 
-if (empty(trim($username))) {
-    echo json_encode(["query_fail" => "Please enter an username"]);
-    exit;
-}
-if (empty(trim($password))) {
-    echo json_encode(["query_fail" => "Please enter a password"]);
-    exit;
-}
+try{
+    if(empty(trim($username))){
+        throw new Exception("Please input an username");
+    }
+    if(empty(trim($password))){
+        throw new Exception("Please input a password");
+    }
 
-try {
     $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch();
-    if (!$user) {
-        throw new Exception("Username does not exist");
-    }
-    if (!password_verify($password, $user->password)) {
-        throw new Exception("You have entered an incorrect password");
+
+    if(!$user || !password_verify($password, $user->password)){
+        throw new Exception("You have entered an incorrect username or password");
     }
 
     $_SESSION["username"] = $username;
     $_SESSION["id"] = $user->id;
     $_SESSION["user_id"] = $user->id;
-} catch (PDOException $e) {
+    echo json_encode(["query_success" => "Login success"]);
+} 
+catch(PDOException $e){
+    echo json_encode(["query_fail_notUser" => $e->getMessage()]);
     session_destroy();
-    echo json_encode([
-        "query_fail" => $e->getMessage()
-    ]);
+}
+catch(Exception $e){
+    echo json_encode(["query_fail" => $e->getMessage()]);
+    session_destroy();
 }
 
 $stmt = null;
