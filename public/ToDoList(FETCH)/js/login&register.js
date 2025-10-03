@@ -86,4 +86,16 @@ function inputValidation(username, password){
     if(password.value.length < 8){
         throw new Error("A password must be at least 8 symbols long");
     }
+    if(password.value === password.value.toLowerCase()){
+        throw new Error("A password must contain a capital letter");
+    }
+    if(password.value === password.value.toUpperCase()){
+        throw new Error("A password must contain a non-capital letter");
+    }
+    if(!Boolean(password.value.match(/[0-9]/))){
+        throw new Error("A password must contain a number");
+    }
+    if(!Boolean(password.value.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/))){
+        throw new Error("A password must contain a special character");
+    }
 }

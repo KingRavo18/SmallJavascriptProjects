@@ -27,6 +27,9 @@ if(isset($_POST["task"])){
         echo json_encode(["query_fail" => $e->getMessage()]);
     }
 }
+else{
+    echo json_encode(["query_fail" => "Failed to create task"]);
+}
 
 $stmt = null;
 $conn = null;
