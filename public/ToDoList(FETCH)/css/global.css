@@ -16,7 +16,7 @@ input {
     box-shadow: 0 0 5px rgb(136, 136, 136);
     border: none;
     cursor: pointer;
-    transition: 0.5s;
+    transition: background-color 0.2s linear;
     border-radius: 5px;
 
     &::placeholder {

@@ -15,6 +15,10 @@
         }
     }
 
+    & .no-task-input {
+        border-radius: 20px;
+    }
+
     & .loadingMessage {
         background-color: rgb(57, 253, 194);
         text-align: center;
@@ -25,6 +29,8 @@
         margin: 0;
         padding: 0;
         width: 99%;
+        max-height: 350px;
+        overflow-y: auto;
         background-color: yellow;
         box-shadow: 0 0 5px rgb(136, 136, 136);
         list-style: none;
@@ -36,6 +42,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 10px;
+
+            & span {
+                max-width: 300px;
+                text-wrap: wrap;
+                overflow-wrap: break-word;
+            }
 
             & button {
                 border: none;

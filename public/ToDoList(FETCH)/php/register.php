@@ -37,6 +37,7 @@ try{
 } 
 catch(PDOException $e){
     echo json_encode(["query_fail_pdo" => $e->getMessage()]);
+    echo json_encode(["query_fail" => "An error has occured. Please try again later"]);
 }
 catch(Exception $e){
     echo json_encode(["query_fail" => $e->getMessage()]);

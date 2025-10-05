@@ -33,6 +33,7 @@ class TaskManager{
         this.updateUrl = updateUrl;
         this.deleteUrl = deleteUrl;
         this.ToDoListContainer = document.getElementById("ToDoList-container");
+        this.taskValueInput = document.getElementById("taskInput");
         this.empty = document.createElement("p");
         this.taskAmount;
     }
@@ -62,6 +63,7 @@ class TaskManager{
                 this.noTasks();
             } 
             else{
+                this.taskValueInput.classList.remove("no-task-input");
                 data.tasks?.forEach(task => this.createListItem(task.task, task.id, task.isComplete));
             }    
         }
@@ -74,8 +76,7 @@ class TaskManager{
 
     async submitTask(event){
         event.preventDefault();
-        const taskValueInput = document.getElementById("taskInput");
-        const taskValue = taskValueInput.value.trim();
+        const taskValue = this.taskValueInput.value.trim();
         if(!taskValue){
             return window.alert("Please input a task");
         }
@@ -98,9 +99,10 @@ class TaskManager{
                 throw new Error("Failed to create task");
             }
 
-            taskValueInput.value = "";
+            this.taskValueInput.value = "";
             if(this.taskAmount === 0){
                 this.ToDoListContainer.removeChild(this.empty);
+                this.taskValueInput.classList.remove("no-task-input");
             }
             this.taskAmount += 1;
             this.createListItem(taskValue, data.id, data.isComplete);
@@ -151,6 +153,7 @@ class TaskManager{
 
             this.taskAmount -= 1;
             if(this.taskAmount === 0){
+                this.taskValueInput.classList.add("no-task-input");
                 this.noTasks();
             }
             
