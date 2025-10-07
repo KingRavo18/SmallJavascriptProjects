@@ -52,19 +52,18 @@ async function registration(event){
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({ username: username.value, password: password.value })
         });
+        if(!response.ok){
+            throw new Error("Could not register");
+        }
 
         const data = await response.json();
-
         if(data.query_fail){
             throw new Error(data.query_fail);
         }
         if(data.query_fail_pdo){
             console.error(data.query_fail_pdo);
         }
-        if(!response.ok){
-            throw new Error("Could not register");
-        }
-        
+
         username.value = "";
         password.value = "";
         responseMessage.textContent = data.query_success;
