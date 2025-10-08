@@ -11,7 +11,6 @@ async function sessionValidation(){
         if(!response.ok){
             throw new Error("Failed to validate this session");
         }
-
         const data = await response.json();
         if (data.session_validation === "failed"){
             throw new Error("Session validation failed");
@@ -45,27 +44,23 @@ class TaskManager{
 
     async retrieveData(){
         const loading = document.createElement("p");
-        loading.textContent = "Loading...";
         loading.classList.add("loadingMessage");
+        loading.textContent = "Loading...";
         this.ToDoListContainer.appendChild(loading);
-
         try{
             const response = await fetch(this.retrieveUrl);
-            const data = await response.json();
-            this.taskAmount = Number(data.row_count);
-            this.ToDoListContainer.removeChild(loading);
-
             if(!response.ok){
                 throw new Error("Failed to retrieve tasks");
             }
-
+            const data = await response.json();
+            this.taskAmount = Number(data.row_count);
+            this.ToDoListContainer.removeChild(loading);
             if(this.taskAmount === 0){
                 this.noTasks();
-            } 
-            else{
+            }else{
                 this.taskValueInput.classList.remove("no-task-input");
-                data.tasks?.forEach(task => this.createListItem(task.task, task.id, task.isComplete));
-            }    
+                data.tasks?.forEach(task => this.createListItem(task.task, task.id, task.isComplete));  
+            } 
         }
         catch(error){
             loading.classList.remove("loadingMessage");
@@ -80,31 +75,28 @@ class TaskManager{
         if(!taskValue){
             return window.alert("Please input a task");
         }
-
         try{
             const response = await fetch(this.submitUrl, {
                 method: "POST",
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ task: taskValue })
             });
-            const data = await response.json();
-            
-            if(data.query_fail){
-                throw new Error(data.query_fail);
-            }
-            if(data.query_fail_pdo){
-                console.error(data.query_fail_pdo);
-            }
             if(!response.ok){
                 throw new Error("Failed to create task");
-            }
-
+            } 
+            const data = await response.json();
+            if(data.query_fail){
+                throw new Error(data.query_fail);
+            } 
+            if(data.query_fail_pdo){
+                console.error(data.query_fail_pdo);
+            } 
             this.taskValueInput.value = "";
             if(this.taskAmount === 0){
                 this.ToDoListContainer.removeChild(this.empty);
                 this.taskValueInput.classList.remove("no-task-input");
             }
-            this.taskAmount += 1;
+            this.taskAmount++;
             this.createListItem(taskValue, data.id, data.isComplete);
         }
         catch(error){
@@ -119,17 +111,16 @@ class TaskManager{
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ id: id, isComplete: isComplete })
             });
-            const data = await response.json();
-            
-            if(data.query_fail){
-                throw new Error(data.query_fail);
-            }
-            if(data.query_fail_pdo){
-                throw new Error(data.query_fail_pdo);
-            }
             if(!response.ok){
                 throw new Error("Failed to update task");
-            }
+            } 
+            const data = await response.json();
+            if(data.query_fail){
+                throw new Error(data.query_fail);
+            } 
+            if(data.query_fail_pdo){
+                throw new Error(data.query_fail_pdo);
+            } 
         } 
         catch(error){
             console.error(error);
@@ -139,24 +130,23 @@ class TaskManager{
     async deleteTask(id){
         try{
             const response = await fetch(`${this.deleteUrl}?id=${id}`, { method: "DELETE" });
-            const data = await response.json();
-
-            if(data.query_fail){
-                throw new Error(data.query_fail);
-            }
-            if(data.query_fail_pdo){
-                throw new Error(data.query_fail_pdo);
-            }
             if(!response.ok){
                 throw new Error("Failed to delete task");
-            }
+            } 
 
-            this.taskAmount -= 1;
+            const data = await response.json();
+            if(data.query_fail){
+                throw new Error(data.query_fail);
+            } 
+            if(data.query_fail_pdo){
+                throw new Error(data.query_fail_pdo);
+            } 
+
+            this.taskAmount--;
             if(this.taskAmount === 0){
                 this.taskValueInput.classList.add("no-task-input");
                 this.noTasks();
             }
-            
         }
         catch(error){
             console.error(error);
@@ -211,8 +201,27 @@ class TaskManager{
 }
 
 function logoutPopupControl(){
-    const openLogoutPopup = () => document.getElementById("popup-container").style.display = "grid";
-    const closeLogoutPopup = () => document.getElementById("popup-container").style.display = "none";
+    const popupContainer = document.getElementById("popup-container");
+    const popup = document.getElementById("logout-popup");
+
+    function openLogoutPopup(){
+        popupContainer.classList.remove("non-visible-popup-background");
+        popupContainer.classList.add("visible-popup-background");
+        popup.classList.add("visible-popup");
+    } 
+    function closeLogoutPopup(){
+        popup.classList.remove("visible-popup");
+        popup.classList.add("popup-fade");
+        popupContainer.classList.remove("visible-popup-background");
+        popupContainer.classList.add("background-fade");
+    
+        setTimeout(() => {
+            popup.classList.remove("popup-fade");
+            popupContainer.classList.remove("background-fade");
+            popupContainer.classList.add("non-visible-popup-background");
+        }, 499);
+        
+    } 
 
     document.getElementById("logOutBtn").onclick = openLogoutPopup;
     document.getElementById("logoutDeny").onclick = closeLogoutPopup;
