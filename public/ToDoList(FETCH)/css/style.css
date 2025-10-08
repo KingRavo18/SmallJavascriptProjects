@@ -130,51 +130,39 @@
 
 .background-fade{
     display: grid;
-    animation-name: popup-backgroundFade;
+    animation-name: popup-background-fade-out;
     animation-duration: 0.5s;
-}
-@keyframes popup-backgroundFade{
-    from{
-        opacity: 1;
-    }
-    to{
-        opacity: 0;
-    }
-}
 
-.popup-fade{
-    animation-name: popup-fade;
-    animation-duration: 0.5s;
+    & .popup-fade{
+        animation-name: popup-fall;
+        animation-duration: 0.5s;
+    }
 }
-@keyframes popup-fade{
-    from{
-        margin-top: 0;
-    }
-    to{
-        margin-top: 100px;
-    }
+@keyframes popup-background-fade-out{
+    from{ opacity: 1; }
+    to{ opacity: 0; }
+}
+@keyframes popup-fall{
+    from{ margin-top: 0; }
+    to{ margin-top: 100px; }
 }
 
 .visible-popup-background{
     display: grid;
-    animation-name: background-fadin;
+    animation-name: popup-background-fade-in;
     animation-duration: 0.5s;
     opacity: 1;
-}
-@keyframes background-fadin{
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
-}
 
-.visible-popup{
-    animation-name: popupRise;
-    animation-duration: 0.5s;
+    & .visible-popup{
+        animation-name: popup-rise;
+        animation-duration: 0.5s;
+    }
 }
-@keyframes popupRise{
+@keyframes popup-background-fade-in{
+    from{ opacity: 0; }
+    to{ opacity: 1; }
+}
+@keyframes popup-rise{
     from{
         opacity: 0;
         margin-top: 100px;

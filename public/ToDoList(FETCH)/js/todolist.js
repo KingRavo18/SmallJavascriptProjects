@@ -211,8 +211,8 @@ function logoutPopupControl(){
     } 
     function closeLogoutPopup(){
         popup.classList.remove("visible-popup");
-        popup.classList.add("popup-fade");
         popupContainer.classList.remove("visible-popup-background");
+        popup.classList.add("popup-fade");
         popupContainer.classList.add("background-fade");
     
         setTimeout(() => {
