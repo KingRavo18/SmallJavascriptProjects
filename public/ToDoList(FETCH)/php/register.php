@@ -1,50 +1,69 @@
 <?php
-require("database.php");
+require("databaseOOP.php");
 
-function inputValidation($username, $password){
-    if(empty(trim($username))){
-        throw new Exception("Please input an username");    
+class Registration extends DatabaseConnect{
+    private $username;
+    private $password;
+
+    public function __construct($username, $password){
+        $this->username = $username;
+        $this->password = $password;
     }
-    if(empty(trim($password))){
-        throw new Exception("Please input a password");
+
+    private function inputValidation(){
+        if(empty(trim($this->username))){
+            throw new Exception("Please input an username");    
+        }
+        if(empty(trim($this->password))){
+            throw new Exception("Please input a password");
+        }
+        if(strlen($this->password) < 8){
+            throw new Exception("A password must be at least 8 symbols long");
+        }
+        if(!preg_match("/[a-z]/", $this->password)){
+            throw new Exception("A password must contain a non-capital letter");
+        }
+        if(!preg_match("/[A-Z]/", $this->password)){
+            throw new Exception("A password must contain a capital letter");
+        }
+        if(!preg_match("/[0-9]/", $this->password)){
+            throw new Exception("A password must contain a number");
+        }
+        if(!preg_match("/[\'^£$%&*()}{@#~?><>,|=_+¬-]/", $this->password)){
+            throw new Exception("A password must contain a special character");
+        }
     }
-    if(strlen($password) < 8){
-        throw new Exception("A password must be at least 8 symbols long");
+
+    private function insertUser() {
+        $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
+        $stmt = parent::conn()->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+        $stmt->execute([$this->username, $password_hash]); 
+        $stmt = null;   
+        echo json_encode(["query_success" => "You are now registered"]);
     }
-    if(!preg_match("/[a-z]/", $password)){
-        throw new Exception("A password must contain a non-capital letter");
+    
+    public function execution(){
+        try{
+            $this->inputValidation();
+            $this->insertUser();
+        }
+        catch(PDOException $e){
+            echo json_encode([
+                "query_fail_pdo" => $e->getMessage(),
+                "query_fail" => "An error has occured. Please try again later"
+            ]);
+        }
+        catch(Exception $e){
+            echo json_encode(["query_fail" => $e->getMessage()]);
+        } 
+        finally{
+            session_destroy();
+        }
     }
-    if(!preg_match("/[A-Z]/", $password)){
-        throw new Exception("A password must contain a capital letter");
-    }
-    if(!preg_match("/[0-9]/", $password)){
-        throw new Exception("A password must contain a number");
-    }
-    if(!preg_match("/[\'^£$%&*()}{@#~?><>,|=_+¬-]/", $password)){
-        throw new Exception("A password must contain a special character");
-    }
-}
+} 
 
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+$registration = new Registration($username, $password);
+$registration->execution();
 
-try{
-    inputValidation($username, $password);
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-    $stmt->execute([$username, $password_hash]);    
-    echo json_encode(["query_success" => "You are now registered"]);
-} 
-catch(PDOException $e){
-    echo json_encode(["query_fail_pdo" => $e->getMessage()]);
-    echo json_encode(["query_fail" => "An error has occured. Please try again later"]);
-}
-catch(Exception $e){
-    echo json_encode(["query_fail" => $e->getMessage()]);
-} 
-finally{
-    session_destroy();
-}
-
-$stmt = null;
-$conn = null;
