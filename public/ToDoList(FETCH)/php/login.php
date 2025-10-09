@@ -18,7 +18,6 @@ class Login extends DatabaseConnect{
             throw new Exception("Please input a password");
         }   
     }
-
     private function loginUser(){
         $stmt = parent::conn()->prepare("SELECT id, password FROM users WHERE username = ?");
         $stmt->execute([$this->username]);
