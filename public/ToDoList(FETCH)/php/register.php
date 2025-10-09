@@ -1,5 +1,5 @@
 <?php
-require("databaseOOP.php");
+require("database.php");
 class Registration extends DatabaseConnect{
     private $username;
     private $password;
@@ -37,8 +37,8 @@ class Registration extends DatabaseConnect{
         $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
         $stmt = parent::conn()->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
         $stmt->execute([$this->username, $password_hash]); 
-        $stmt = null;   
         echo json_encode(["query_success" => "You are now registered"]);
+        $stmt = null;  
     }
     
     public function execution(){

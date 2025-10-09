@@ -1,5 +1,5 @@
 <?php
-require("databaseOOP.php");
+require("database.php");
 class UpdateTask extends DatabaseConnect{
     private $id;
     private $isComplete;
@@ -12,8 +12,8 @@ class UpdateTask extends DatabaseConnect{
     private function updateTask(){
         $stmt = parent::conn()->prepare("UPDATE tasks SET isComplete = ? WHERE id = ?");
         $stmt->execute([$this->isComplete, $this->id]);
-        $stmt = null;
         echo json_encode(["query_success" => "Task Updated Successfully"]);
+        $stmt = null;
     }
 
     public function execution(){

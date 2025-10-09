@@ -1,5 +1,5 @@
 <?php
-require("databaseOOP.php");
+require("database.php");
 class DeleteTask extends DatabaseConnect{
     private $id;
 
@@ -10,8 +10,8 @@ class DeleteTask extends DatabaseConnect{
     private function deleteData(){
         $stmt = parent::conn()->prepare("DELETE FROM tasks WHERE id = ?");
         $stmt->execute([$this->id]);
-        $stmt = null;
         echo json_encode(["query_success" => "Task Deleted Successfully"]);
+        $stmt = null;
     }
 
     public function execution(){

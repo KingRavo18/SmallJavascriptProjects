@@ -1,5 +1,5 @@
 <?php
-require("databaseOOP.php");
+require("database.php");
 class Login extends DatabaseConnect{
     private $username;
     private $password;
@@ -28,8 +28,8 @@ class Login extends DatabaseConnect{
 
         $_SESSION["username"] = $this->username;
         $_SESSION["id"] = $user->id;
-        $stmt = null;
         echo json_encode(["query_success" => "Login success"]);
+        $stmt = null;
     }
 
     public function execution(){
