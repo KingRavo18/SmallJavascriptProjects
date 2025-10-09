@@ -33,6 +33,16 @@ class Registration extends DatabaseConnect{
         }
     }
 
+    private function usernameExists(){
+        $stmt = parent::conn()->prepare("SELECT username from users WHERE username = ?");
+        $stmt->execute([$this->username]);
+        $users = $stmt->rowCount();
+        if($users > 0){
+            throw new Exception("This username has already been taken");
+        }
+        $stmt = null;
+    }
+
     private function insertUser() {
         $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
         $stmt = parent::conn()->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
@@ -44,6 +54,7 @@ class Registration extends DatabaseConnect{
     public function execution(){
         try{
             $this->inputValidation();
+            $this->usernameExists();
             $this->insertUser();
         }
         catch(PDOException $e){
