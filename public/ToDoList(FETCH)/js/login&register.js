@@ -33,7 +33,7 @@ async function login(event){
     } 
     catch(error){
         responseMessage.classList.add("error-message");
-        responseMessage.textContent = error.message;
+        responseMessageVanish(responseMessage, error.message);
     }
 }
 
@@ -66,13 +66,20 @@ async function registration(event){
 
         username.value = "";
         password.value = "";
-        responseMessage.textContent = data.query_success;
+        responseMessageVanish(responseMessage, data.query_success);
     } 
     catch(error){
         responseMessage.classList.remove("success-message");
         responseMessage.classList.add("error-message");
-        responseMessage.textContent = error.message;
+        responseMessageVanish(responseMessage, error.message);
     }
+}
+
+function responseMessageVanish(responseMessage, message){
+    responseMessage.textContent = message;
+    setTimeout(() => {
+        responseMessage.textContent = "";
+    }, 4000)
 }
 
 function inputValidation(username, password){
