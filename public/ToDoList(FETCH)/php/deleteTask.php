@@ -1,6 +1,5 @@
 <?php
 require("databaseOOP.php");
-
 class DeleteTask extends DatabaseConnect{
     private $id;
 

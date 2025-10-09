@@ -1,6 +1,5 @@
 <?php
 require("databaseOOP.php");
-
 class Registration extends DatabaseConnect{
     private $username;
     private $password;

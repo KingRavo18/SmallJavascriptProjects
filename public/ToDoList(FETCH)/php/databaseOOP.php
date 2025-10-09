@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 class DatabaseConnect {
     private $db_server = "localhost";
     private $db_username = "root";
