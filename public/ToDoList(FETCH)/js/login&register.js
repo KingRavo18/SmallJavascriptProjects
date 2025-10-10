@@ -7,8 +7,7 @@ async function login(event){
     event.preventDefault();
     const username = document.getElementById("log-username");
     const password = document.getElementById("log-password");
-    const responseMessage = document.getElementById("login-message");
-    responseMessage.classList.remove("error-message");
+    const mainFormContainer = document.getElementById("main-form-container");
 
     try{
         inputValidation(username, password);
@@ -32,8 +31,7 @@ async function login(event){
         window.location.href = "./toDoList.html";
     } 
     catch(error){
-        responseMessage.classList.add("error-message");
-        responseMessageVanish(responseMessage, error.message);
+        errorMessage(mainFormContainer, error.message);
     }
 }
 
@@ -41,10 +39,7 @@ async function registration(event){
     event.preventDefault();
     const username = document.getElementById("reg-username");
     const password = document.getElementById("reg-password");
-    const responseMessage = document.getElementById("registration-message");
-    responseMessage.classList.remove("error-message");
-    responseMessage.classList.add("success-message");
-
+    const mainFormContainer = document.getElementById("main-form-container");
     try{
         inputValidation(username, password)
         const response = await fetch("./php/register.php", {
@@ -66,19 +61,42 @@ async function registration(event){
 
         username.value = "";
         password.value = "";
-        responseMessageVanish(responseMessage, data.query_success);
+        successMessage(mainFormContainer, data.query_success);
     } 
     catch(error){
-        responseMessage.classList.remove("success-message");
-        responseMessage.classList.add("error-message");
-        responseMessageVanish(responseMessage, error.message);
+        errorMessage(mainFormContainer, error.message)
     }
 }
 
-function responseMessageVanish(responseMessage, message){
-    responseMessage.textContent = message;
+function errorMessage(mainFormContainer, message){
+    const errorMessage = document.createElement("span");
+    errorMessage.classList.add("message");
+    errorMessage.classList.add("errorMessage");
+    errorMessage.textContent = message;
+    mainFormContainer.appendChild(errorMessage);
     setTimeout(() => {
-        responseMessage.textContent = "";
+        errorMessage.classList.add("messageDisappearAnimation");
+        setTimeout(() => {
+            errorMessage.classList.remove("messageDisappearAnimation");
+            errorMessage.classList.remove("errorMessage");
+            mainFormContainer.removeChild(errorMessage);
+        }, 490);
+    }, 4000)
+}
+
+function successMessage(mainFormContainer, message){
+    const successMessage = document.createElement("span");
+    successMessage.classList.add("message");
+    successMessage.classList.add("successMessage");
+    successMessage.textContent = message;
+    mainFormContainer.appendChild(successMessage);
+    setTimeout(() => {
+        successMessage.classList.add("messageDisappearAnimation");
+        setTimeout(() => {
+            successMessage.classList.remove("messageDisappearAnimation");
+            successMessage.classList.remove("successMessage");
+            mainFormContainer.removeChild(successMessage);
+        }, 490);
     }, 4000)
 }
 

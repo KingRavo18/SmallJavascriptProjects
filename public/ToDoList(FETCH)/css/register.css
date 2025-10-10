@@ -21,3 +21,45 @@ main {
         border-radius: 10px;
     }
 }
+
+.message{
+    font-size: 1vw;
+    margin-top: -20px;
+    position: fixed;
+    left: 50%;
+    max-width: 400px;
+    text-wrap: wrap;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgb(136, 136, 136);
+    animation-name: messageAppear;
+    animation-duration: 500ms;
+}
+
+.errorMessage{
+    background-color: rgb(252, 205, 213);
+    border: 1.5px solid red;
+    color: red;
+}
+
+.successMessage{
+    background-color: rgb(129, 255, 129);
+    border: 1.5px solid green;
+    color: green;
+}
+
+.messageDisappearAnimation{
+    animation-name: messageDisappear;
+}
+
+@keyframes messageAppear{
+    from{ margin-top: -100px; }
+    to{ margin-top: -20px; }
+}
+
+@keyframes messageDisappear{
+    from{ margin-top: -20px; }
+    to{ margin-top: -100px; }
+}
