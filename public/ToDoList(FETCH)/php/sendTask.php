@@ -16,9 +16,11 @@ class SubmitTask extends DatabaseConnect{
     }
 
     private function submitTask(){
-        $stmt = parent::conn()->prepare("INSERT INTO tasks (user_id, task) VALUES (?, ?)");
+        //This line puts both uses of $conn on the same connection so lastInsertId would work correctly
+        $conn = parent::conn();
+        $stmt = $conn->prepare("INSERT INTO tasks (user_id, task) VALUES (?, ?)");
         $stmt->execute([$this->user_id, $this->task]);
-        $last_id = parent::conn()->lastInsertId();
+        $last_id = $conn->lastInsertId();
 
         echo json_encode([
             "query_success" => "Task added succesfully",
