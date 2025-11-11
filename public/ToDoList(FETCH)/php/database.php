@@ -4,7 +4,7 @@ class DatabaseConnect {
     private $db_server = "localhost";
     private $db_username = "root";
     private $db_password = "";
-    private $db_name = "ajaxtodolist";
+    private $db_name = "to_do_list";
 
     protected function conn(){
         $attribute_options = [

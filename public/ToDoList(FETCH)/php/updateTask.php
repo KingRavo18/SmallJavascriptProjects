@@ -10,7 +10,7 @@ class UpdateTask extends DatabaseConnect{
     }
 
     private function updateTask(){
-        $stmt = parent::conn()->prepare("UPDATE tasks SET isComplete = ? WHERE id = ?");
+        $stmt = parent::conn()->prepare("UPDATE tasks SET is_complete = ? WHERE id = ?");
         $stmt->execute([$this->isComplete, $this->id]);
         echo json_encode(["query_success" => "Task Updated Successfully"]);
         $stmt = null;
